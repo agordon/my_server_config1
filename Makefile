@@ -47,8 +47,8 @@ common_build: xzutils \
 	git \
 	coreutils
 
-.PHONY: install-autoconf-package
-install-autoconf-package:
+.PHONY: build-autoconf-package
+build-autoconf-package:
 	rm -f "$(TARNAME)"
 	rm -rf "$(DIRNAME)"
 	wget "$(URL)"
@@ -57,28 +57,28 @@ install-autoconf-package:
 
 .PHONY: coreutils
 coreutils:
-	$(MAKE) URL="$(COREUTILS)" install-autoconf-package
+	$(MAKE) URL="$(COREUTILS)" build-autoconf-package
 
 .PHONY: findutils
 findutils:
-	$(MAKE) URL="$(FINDUTILS)" install-autoconf-package
+	$(MAKE) URL="$(FINDUTILS)" build-autoconf-package
 
 .PHONY: grep
 grep:
-	$(MAKE) URL="$(GREP)" install-autoconf-package
+	$(MAKE) URL="$(GREP)" build-autoconf-package
 
 .PHONY: awk
 awk:
-	$(MAKE) URL="$(GAWK)" install-autoconf-package
+	$(MAKE) URL="$(GAWK)" build-autoconf-package
 
 .PHONY: sed
 sed:
-	$(MAKE) URL="$(GSED)" install-autoconf-package
+	$(MAKE) URL="$(GSED)" build-autoconf-package
 
 .PHONY: git
 git:
-	$(MAKE) URL="$(GIT)" install-autoconf-package
+	$(MAKE) URL="$(GIT)" build-autoconf-package
 
 .PHONY: xzutils
 xzutils:
-	$(MAKE) URL="$(XZUTILS)" install-autoconf-package
+	$(MAKE) URL="$(XZUTILS)" build-autoconf-package
