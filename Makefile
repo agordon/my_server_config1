@@ -108,12 +108,26 @@ xzutils:
 pigz:
 	$(MAKE) URL="$(PIGZ)" build-make-package
 
+## pigz doesn't have INSTALL target
+## need to manually copy the executables
+.PHONY: pigz-install
+pigz-install:
+	( [ -d "$(DIRNAME)" ] && ( cd "$(DIRNAME)" ; cp pigz unpigz /usr/local/bin/ ) )
+
 .PHONY: pbzip2
 pbzip2:
 	$(MAKE) URL="$(PBZIP2)" build-make-package
 
+## pbzip2 requires customized installation command (with PREFIX)
+.PHONY: pbzip2-install
+pbzip2-install:
+	$(MAKE) URL="$(PBZIP2)" PREFIX=/usr/local/ install
+
+
 .PHONY: common_install
 common_install:
+	$(MAKE) URL="$(PIGZ)" pigz-install
+	$(MAKE) URL="$(PBZIP2)" bzip2-install
 	$(MAKE) URL="$(COREUTILS)" install-autoconf-package
 	$(MAKE) URL="$(FINDUTILS)" install-autoconf-package
 	$(MAKE) URL="$(GREP)" install-autoconf-package
