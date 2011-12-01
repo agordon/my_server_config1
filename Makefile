@@ -17,7 +17,8 @@ TARNAME=$(notdir $(URL))
 #implicit assumption: TARNAME as two extensions: ".tar" and ".gz"/".bz2"/".xz"
 DIRNAME=$(basename $(basename $(TARNAME)))
 
-CENTOS_PACKAGES=curl-devel.x86_64
+CENTOS_PACKAGES=curl-devel.x86_64 \
+		bzip2-devel.x86_64
 
 all:
 	@echo "Possible Targets:"
