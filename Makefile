@@ -36,6 +36,9 @@ all:
 	@echo "    pigz          - Parallel gzip"
 	@echo "    pbzip2        - Parallel bzip2"
 	@echo ""
+	@echo "  common_install - Installs all the above pacakages."
+	@echo "                   Assumes 'common_build' was successfully executed."
+	@echo "                   (requires 'sudo')."
 
 .PHONY: cshl_centos
 cshl_centos:
@@ -60,6 +63,10 @@ build-autoconf-package:
 	wget "$(URL)"
 	tar -xvf "$(TARNAME)"
 	( cd "$(DIRNAME)" ; ./configure ; make )
+
+.PHONY: install-autoconf-package
+install-autoconf-package:
+	( [ -d "$(DIRNAME)" ] && ( cd "$(DIRNAME)" ; make install ) )
 
 .PHONY: build-make-package
 build-make-package:
@@ -104,3 +111,13 @@ pigz:
 .PHONY: pbzip2
 pbzip2:
 	$(MAKE) URL="$(PBZIP2)" build-make-package
+
+.PHONY: common_install
+common_install:
+	$(MAKE) URL="$(COREUTILS)" install-autoconf-package
+	$(MAKE) URL="$(FINDUTILS)" install-autoconf-package
+	$(MAKE) URL="$(GREP)" install-autoconf-package
+	$(MAKE) URL="$(GAWK)" install-autoconf-package
+	$(MAKE) URL="$(GSED)" install-autoconf-package
+	$(MAKE) URL="$(GIT)" install-autoconf-package
+	$(MAKE) URL="$(XZUTILS)" install-autoconf-package
