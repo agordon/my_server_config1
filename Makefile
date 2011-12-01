@@ -86,13 +86,17 @@ build-autoconf-package: autoconf-step-make
 install-autoconf-package:
 	( [ -d "$(DIRNAME)" ] && ( cd "$(DIRNAME)" ; make install ) )
 
+
+
+##
+## building a simple "Make" package
+## (not autotools / configure support)
+
 .PHONY: build-make-package
 build-make-package:
-	rm -f "$(TARNAME)"
-	rm -rf "$(DIRNAME)"
-	wget "$(URL)"
-	tar -xvf "$(TARNAME)"
-	( cd "$(DIRNAME)" ; make )
+	@( [ -e "$(TARNAME)" ] || wget "$(URL)" )
+	@( [ -d "$(DIRNAME)" ] || tar -xvf "$(TARNAME)" )
+	@( cd "$(DIRNAME)" ; make )
 
 .PHONY: coreutils
 coreutils:
