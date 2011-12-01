@@ -8,6 +8,7 @@ GREP=ftp://ftp.gnu.org/gnu/grep/grep-2.9.tar.gz
 GIT=http://git-core.googlecode.com/files/git-1.7.7.4.tar.gz
 PIGZ=http://www.zlib.net/pigz/pigz-2.1.6.tar.gz
 PBZIP2=http://compression.ca/pbzip2/pbzip2-1.1.6.tar.gz
+TAR=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.gz
 
 
 # Default URL is dummy. Use must specify a valid one
@@ -99,6 +100,10 @@ sed:
 .PHONY: git
 git:
 	$(MAKE) URL="$(GIT)" build-autoconf-package
+
+.PHONY: tar
+tar:
+	$(MAKE) URL="$(TAR)" build-autoconf-package
 
 .PHONY: xzutils
 xzutils:
