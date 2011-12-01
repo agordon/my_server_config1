@@ -9,7 +9,7 @@ GIT=http://git-core.googlecode.com/files/git-1.7.7.4.tar.gz
 PIGZ=http://www.zlib.net/pigz/pigz-2.1.6.tar.gz
 PBZIP2=http://compression.ca/pbzip2/pbzip2-1.1.6.tar.gz
 TAR=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.gz
-
+NANO=http://www.nano-editor.org/dist/v2.2/nano-2.2.6.tar.gz
 
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
@@ -96,6 +96,7 @@ all:
 	@echo "    xzutils       - XZ/LZMA compression programs"
 	@echo "    pigz          - Parallel gzip"
 	@echo "    pbzip2        - Parallel bzip2"
+	@echo "    nano          - GNU Nano text editor"
 	@echo ""
 	@echo "  common_install - Installs all the above pacakages."
 	@echo "                   Assumes 'common_build' was successfully executed."
@@ -115,7 +116,8 @@ common_build: xzutils \
 	git \
 	coreutils \
 	pigz \
-	pbzip2
+	pbzip2 \
+	nano
 
 
 ##
@@ -186,6 +188,10 @@ git:
 tar:
 	$(MAKE) URL="$(TAR)" build-autoconf-package
 
+.PHONY: nano
+nano:
+	$(MAKE) URL="$(NANO)" build-autoconf-package
+
 .PHONY: xzutils
 xzutils:
 	$(MAKE) URL="$(XZUTILS)" build-autoconf-package
@@ -221,3 +227,4 @@ common_install:
 	$(MAKE) URL="$(GSED)" install-autoconf-package
 	$(MAKE) URL="$(GIT)" install-autoconf-package
 	$(MAKE) URL="$(XZUTILS)" install-autoconf-package
+	$(MAKE) URL="$(NANO)" install-autoconf-package
