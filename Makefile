@@ -17,8 +17,67 @@ TARNAME=$(notdir $(URL))
 #implicit assumption: TARNAME as two extensions: ".tar" and ".gz"/".bz2"/".xz"
 DIRNAME=$(basename $(basename $(TARNAME)))
 
-CENTOS_PACKAGES=curl-devel.x86_64 \
-		bzip2-devel.x86_64
+CENTOS_PACKAGES=\
+		ImageMagick.x86_64 \
+		blas-devel.x86_64 \
+		blas.x86_64 \
+		boost-devel.x86_64 \
+		boost.x86_64 \
+		bzip2-devel.x86_64 \
+		bzip2-devel.x86_64 \
+		bzip2.x86_64 \
+		ctags.x86_64 \
+		curl-devel.x86_64 \
+		curl-devel.x86_64 \
+		dos2unix.x86_64 \
+		fftw3-devel.x86_64 \
+		fftw3.x86_64 \
+		fuse-devel.x86_64 \
+		fuse.x86_64 \
+		gcc44-c++.x86_64 \
+		gcc44.x86_64 \
+		gd-devel.x86_64 \
+		gettext-devel.x86_64 \
+		lapack-devel.x86_64 \
+		lapack.x86_64 \
+		libjpeg-devel.x86_64 \
+		libpng-devel.x86_64 \
+		mod_perl-devel.x86_64 \
+		mod_perl.x86_64 \
+		mod_python.x86_64 \
+		mod_ssl.x86_64 \
+		mod_xsendfile.x86_64 \
+		mysql-devel.x86_64 \
+		mysql.x86_64 \
+		ncurses-devel.x86_64 \
+		nmap.x86_64 \
+		octave.x86_64 \
+		openssl-devel.x86_64 \
+		pcre-devel.x86_64 \
+		pdftk.x86_64 \
+		php-cli.x86_64 \
+		php-common.x86_64 \
+		php-devel.x86_64 \
+		php-ldap.x86_64 \
+		php-mbstring.x86_64 \
+		php-mysql.x86_64 \
+		php.x86_64 \
+		postgresql-devel.x86_64 \
+		python26-devel.x86_64 \
+		python26-setuptools.noarch \
+		python26.x86_64 \
+		readline-devel.x86_64 \
+		sqlite-devel.x86_64 \
+		sqlite.x86_64 \
+		strace.x86_64 \
+		tcpdump.x86_64 \
+		valgrind.x86_64 \
+		vim-enhanced.x86_64 \
+		wireshark.x86_64 \
+		zlib-devel.x86_64 \
+
+
+
 
 all:
 	@echo "Possible Targets:"
