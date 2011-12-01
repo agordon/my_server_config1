@@ -6,6 +6,8 @@ GSED=ftp://ftp.gnu.org/gnu/sed/sed-4.2.tar.gz
 FINDUTILS=http://ftp.gnu.org/pub/gnu/findutils/findutils-4.4.2.tar.gz
 GREP=ftp://ftp.gnu.org/gnu/grep/grep-2.9.tar.gz
 GIT=http://git-core.googlecode.com/files/git-1.7.7.4.tar.gz
+PIGZ=http://www.zlib.net/pigz/pigz-2.1.6.tar.gz
+PBZIP2=http://compression.ca/pbzip2/pbzip2-1.1.6.tar.gz
 
 
 # Default URL is dummy. Use must specify a valid one
@@ -31,6 +33,8 @@ all:
 	@echo "    grep          - GNU grep"
 	@echo "    git           - Git source control"
 	@echo "    xzutils       - XZ/LZMA compression programs"
+	@echo "    pigz          - Parallel gzip"
+	@echo "    pbzip2        - Parallel bzip2"
 	@echo ""
 
 .PHONY: cshl_centos
@@ -45,7 +49,9 @@ common_build: xzutils \
 	awk \
 	sed \
 	git \
-	coreutils
+	coreutils \
+	pigz \
+	pbzip2
 
 .PHONY: build-autoconf-package
 build-autoconf-package:
@@ -54,6 +60,14 @@ build-autoconf-package:
 	wget "$(URL)"
 	tar -xvf "$(TARNAME)"
 	( cd "$(DIRNAME)" ; ./configure ; make )
+
+.PHONY: build-make-package
+build-make-package:
+	rm -f "$(TARNAME)"
+	rm -rf "$(DIRNAME)"
+	wget "$(URL)"
+	tar -xvf "$(TARNAME)"
+	( cd "$(DIRNAME)" ; make )
 
 .PHONY: coreutils
 coreutils:
@@ -82,3 +96,11 @@ git:
 .PHONY: xzutils
 xzutils:
 	$(MAKE) URL="$(XZUTILS)" build-autoconf-package
+
+.PHONY: pigz
+pigz:
+	$(MAKE) URL="$(PIGZ)" build-make-package
+
+.PHONY: pbzip2
+pbzip2:
+	$(MAKE) URL="$(PBZIP2)" build-make-package
