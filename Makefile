@@ -57,25 +57,46 @@ common_build: xzutils \
 	pigz \
 	pbzip2
 
+
+##
+##  Building an autotools package
+##
+
+
+## 1. download the tarball if it doesn't exist
+## 2. Extract the tarball, create the directory with the source files.
+$(DIRNAME)/configure:
+	@( [ -e "$(TARNAME)" ] || wget "$(URL)" )
+	@( [ -d "$(DIRNAME)" ] || tar -xvf "$(TARNAME)" )
+
+## 3. run "./configure" to create the make files
+$(DIRNAME)/Makefile: $(DIRNAME)/configure
+	( cd "$(DIRNAME)" ; ./configure )
+
+## 4. run "make" to build the package
+.PHONY: autoconf-step-make
+autoconf-step-make: $(DIRNAME)/Makefile
+	( cd "$(DIRNAME)" ; make )
+
 .PHONY: build-autoconf-package
-build-autoconf-package:
-	rm -f "$(TARNAME)"
-	rm -rf "$(DIRNAME)"
-	wget "$(URL)"
-	tar -xvf "$(TARNAME)"
-	( cd "$(DIRNAME)" ; ./configure ; make )
+build-autoconf-package: autoconf-step-make
+
 
 .PHONY: install-autoconf-package
 install-autoconf-package:
 	( [ -d "$(DIRNAME)" ] && ( cd "$(DIRNAME)" ; make install ) )
 
+
+
+##
+## building a simple "Make" package
+## (not autotools / configure support)
+
 .PHONY: build-make-package
 build-make-package:
-	rm -f "$(TARNAME)"
-	rm -rf "$(DIRNAME)"
-	wget "$(URL)"
-	tar -xvf "$(TARNAME)"
-	( cd "$(DIRNAME)" ; make )
+	@( [ -e "$(TARNAME)" ] || wget "$(URL)" )
+	@( [ -d "$(DIRNAME)" ] || tar -xvf "$(TARNAME)" )
+	@( cd "$(DIRNAME)" ; make )
 
 .PHONY: coreutils
 coreutils:
