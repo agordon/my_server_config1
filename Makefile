@@ -7,6 +7,7 @@ FINDUTILS=http://ftp.gnu.org/pub/gnu/findutils/findutils-4.4.2.tar.gz
 GREP=ftp://ftp.gnu.org/gnu/grep/grep-2.9.tar.gz
 GIT=http://git-core.googlecode.com/files/git-1.7.7.4.tar.gz
 
+
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
 TARNAME=$(notdir $(URL))
@@ -16,14 +17,28 @@ DIRNAME=$(basename $(basename $(TARNAME)))
 CENTOS_PACKAGES=curl-devel.x86_64
 
 all:
-	@echo make what?
+	@echo "Possible Targets:"
+	@echo "  cshl_centos   - install needed CentOS packages."
+	@echo "                  (requires 'sudo')"
+	@echo ""
+	@echo "  common_build  - build all the packages listed below\:"
+	@echo ""
+	@echo "    coreutils     - GNU coreutils"
+	@echo "    tar           - GNU tar"
+	@echo "    awk           - GNU awk"
+	@echo "    sed           - GNU sed"
+	@echo "    findutils     - GNU find/xargs"
+	@echo "    grep          - GNU grep"
+	@echo "    git           - Git source control"
+	@echo "    xzutils       - XZ/LZMA compression programs"
+	@echo ""
 
 .PHONY: cshl_centos
 cshl_centos:
 	yum install $(CENTOS_PACKAGES)
 
-.PHONY: common
-common: xzutils \
+.PHONY: common_build
+common_build: xzutils \
 	tar \
 	findutils \
 	grep \
