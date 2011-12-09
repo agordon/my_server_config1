@@ -40,11 +40,13 @@ CPAN_MODULES=\
 		Compress::Bzip2 \
 		List::MoreUtils \
 		Data::Validate \
+		Data::Validate::Struct \
 		File::MimeInfo::Magic \
 		File::Slurp \
 		Number::Format \
 		Sort::Key::Natural \
-		Template
+		Template \
+		Variable::Magic
 
 CPAN_DANCER_MODULES=\
 		Dancer \
