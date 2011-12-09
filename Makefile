@@ -18,6 +18,44 @@ TARNAME=$(notdir $(URL))
 #implicit assumption: TARNAME as two extensions: ".tar" and ".gz"/".bz2"/".xz"
 DIRNAME=$(basename $(basename $(TARNAME)))
 
+CPAN_MODULES=\
+		YAML::XS \
+		YAML::Any \
+		Test::Exception \
+		Test::Pod \
+		Test::Pod::Coverage \
+		Test::More \
+		DBD::SQLite \
+		DBD::mysql \
+		DBD::Pg \
+		Data::Dump \
+		Carp::Always \
+		Carp::Always::Color \
+		DateTime \
+		JSON::XS \
+		Crypt::Blowfish \
+		Moose \
+		Text::CSV_XS \
+		URI::Escape:XS \
+		Compress::Bzip2 \
+		List::MoreUtils \
+		Data::Validate \
+		File::MimeInfo::Magic \
+		File::Slurp \
+		Number::Format \
+		Sort::Key::Natural \
+		Template
+
+CPAN_DANCER_MODULES=\
+		Dancer \
+		Dancer::Plugin::Database \
+		Dancer::Plugin::DebugDump \
+		Dancer::Plugin::Email \
+		Dancer::Plugin::FlashMessage \
+		Dancer::Plugin::EncodeID \
+		Dancer::Plugin::SimpleCRUD
+
+
 CENTOS_PACKAGES=\
 		ImageMagick.x86_64 \
 		blas-devel.x86_64 \
@@ -103,10 +141,22 @@ all:
 	@echo "  common_install - Installs all the above pacakages."
 	@echo "                   Assumes 'common_build' was successfully executed."
 	@echo "                   (requires 'sudo')."
+	@echo ""
+	@echo "  cpan           - Install CPAN modules."
+	@echo ""
+	@echo "  cpan_dancer    - Install CPAN Dancer-related modules."
 
 .PHONY: cshl_centos
 cshl_centos:
 	yum install $(CENTOS_PACKAGES)
+
+.PHONY: cpan
+cpan:
+	PERL_MM_USE_DEFAULT=1 cpan $(CPAN_MODULES)
+
+.PHONY: cpan_dancer
+cpan_dancer:
+	PERL_MM_USE_DEFAULT=1 cpan $(CPAN_DANCER_MODULES)
 
 .PHONY: common_build
 common_build: xzutils \
