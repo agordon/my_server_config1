@@ -25,6 +25,7 @@ CPAN_MODULES=\
 		Test::Pod \
 		Test::Pod::Coverage \
 		Test::More \
+		Test::TCP \
 		DBD::SQLite \
 		DBD::mysql \
 		DBD::Pg \
@@ -33,6 +34,7 @@ CPAN_MODULES=\
 		Carp::Always::Color \
 		DateTime \
 		JSON::XS \
+		JSON \
 		Crypt::Blowfish \
 		Moose \
 		Text::CSV_XS \
@@ -46,7 +48,10 @@ CPAN_MODULES=\
 		Number::Format \
 		Sort::Key::Natural \
 		Template \
-		Variable::Magic
+		Variable::Magic \
+		Date::Manip \
+		Pod::Readme \
+		Devel::CheckLib
 
 CPAN_DANCER_MODULES=\
 		Dancer \
@@ -55,7 +60,9 @@ CPAN_DANCER_MODULES=\
 		Dancer::Plugin::Email \
 		Dancer::Plugin::FlashMessage \
 		Dancer::Plugin::EncodeID \
-		Dancer::Plugin::SimpleCRUD
+		Dancer::Plugin::SimpleCRUD \
+		Dancer::Plugin::Passphrase \
+		Authen::SASL::XS
 
 
 CENTOS_PACKAGES=\
