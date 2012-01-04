@@ -12,6 +12,10 @@ TAR=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.gz
 NANO=http://www.nano-editor.org/dist/v2.2/nano-2.2.6.tar.gz
 PV=http://pipeviewer.googlecode.com/files/pv-1.2.0.tar.bz2
 
+#BIOINFO PACKAGES
+SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samtools-0.1.18.tar.bz2
+BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
+
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
 TARNAME=$(notdir $(URL))
@@ -147,6 +151,11 @@ all:
 	@echo "    nano          - GNU Nano text editor"
 	@echo "    pv            - Pipe Viewer"
 	@echo ""
+	@echo "  bioinfo         - build the packages below\:"
+	@echo ""
+	@echo "    samtools"
+	@echo "    bowtie"
+	@echo ""
 	@echo "  common_install - Installs all the above pacakages."
 	@echo "                   Assumes 'common_build' was successfully executed."
 	@echo "                   (requires 'sudo')."
@@ -265,6 +274,14 @@ xzutils:
 .PHONY: pigz
 pigz:
 	$(MAKE) URL="$(PIGZ)" build-make-package
+
+.PHONY: samtools
+samtools:
+	$(MAKE) URL="$(SAMTOOLS)" build-make-package
+
+.PHONY: bowtie
+bowtie:
+	$(MAKE) URL="$(BOWTIE)" DIRNAME=bowtie-0.12.7 build-make-package
 
 ## pigz doesn't have INSTALL target
 ## need to manually copy the executables
