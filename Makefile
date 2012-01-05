@@ -18,6 +18,13 @@ TARNAME=$(notdir $(URL))
 #implicit assumption: TARNAME as two extensions: ".tar" and ".gz"/".bz2"/".xz"
 DIRNAME=$(basename $(basename $(TARNAME)))
 
+# Allow AutoConf packages to install to specifc prefix
+ifdef PREFIX
+    PREFIX_PARAM=--prefix $(PREFIX)
+else
+    PREFIX_PARAM=
+endif
+
 CPAN_MODULES=\
 		YAML::XS \
 		YAML::Any \
@@ -195,12 +202,12 @@ $(DIRNAME)/configure:
 
 ## 3. run "./configure" to create the make files
 $(DIRNAME)/Makefile: $(DIRNAME)/configure
-	( cd "$(DIRNAME)" ; ./configure )
+	( cd "$(DIRNAME)" ; ./configure $(PREFIX_PARAM) )
 
 ## 4. run "make" to build the package
 .PHONY: autoconf-step-make
 autoconf-step-make: $(DIRNAME)/Makefile
-	( cd "$(DIRNAME)" ; make )
+	( cd "$(DIRNAME)" ; $(MAKE) )
 
 .PHONY: build-autoconf-package
 build-autoconf-package: autoconf-step-make
