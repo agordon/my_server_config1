@@ -24,6 +24,7 @@ SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samto
 BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
 CUFFLINKS=http://cufflinks.cbcb.umd.edu/downloads/cufflinks-1.3.0.tar.gz
 TOPHAT=http://tophat.cbcb.umd.edu/downloads/tophat-1.4.0.tar.gz
+BWA=http://downloads.sourceforge.net/project/bio-bwa/bwa-0.6.1.tar.bz2
 
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
@@ -187,6 +188,7 @@ all:
 	@echo "    bowtie"
 	@echo "    tophat"
 	@echo "    cufflinks"
+	@echo "    bwa"
 	@echo ""
 	@echo "  common_install - Installs all the above pacakages."
 	@echo "                   Assumes 'common_build' was successfully executed."
@@ -366,6 +368,11 @@ samtools:
 	@## Alternatively: copy files to /usr/local/include and /usr/local/lib
 	mkdir -p $(SAMTOOLS_DIR)/include/bam
 	cp $(SAMTOOLS_DIR)/*.h $(SAMTOOLS_DIR)/include/bam/
+
+.PHONY: bwa
+bwa:
+	$(MAKE) URL="$(BWA)" build-make-package
+
 
 .PHONY: bowtie
 bowtie:
