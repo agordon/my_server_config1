@@ -15,6 +15,7 @@ PV=http://pipeviewer.googlecode.com/files/pv-1.2.0.tar.bz2
 #BIOINFO PACKAGES
 SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samtools-0.1.18.tar.bz2
 BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
+CUFFLINKS=http://cufflinks.cbcb.umd.edu/downloads/cufflinks-1.3.0.tar.gz
 
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
@@ -155,6 +156,7 @@ all:
 	@echo ""
 	@echo "    samtools"
 	@echo "    bowtie"
+	@echo "    cufflinks"
 	@echo ""
 	@echo "  common_install - Installs all the above pacakages."
 	@echo "                   Assumes 'common_build' was successfully executed."
@@ -282,6 +284,11 @@ samtools:
 .PHONY: bowtie
 bowtie:
 	$(MAKE) URL="$(BOWTIE)" DIRNAME=bowtie-0.12.7 build-make-package
+
+.PHONY: cufflinks
+cufflinks:
+	$(MAKE) URL="$(CUFFLINKS)" build-autoconf-package
+
 
 ## pigz doesn't have INSTALL target
 ## need to manually copy the executables
