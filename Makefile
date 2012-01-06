@@ -19,6 +19,13 @@ R_BIN=$(R_PREFIX)/bin/R
 # hard-coded mirror, so that R doesn't pop-up the ugly Tcl GUI and ask for one.
 R_CRAN_MIRROR="http://R.research.att.com"
 
+#BIOINFO PACKAGES
+SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samtools-0.1.18.tar.bz2
+BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
+CUFFLINKS=http://cufflinks.cbcb.umd.edu/downloads/cufflinks-1.3.0.tar.gz
+TOPHAT=http://tophat.cbcb.umd.edu/downloads/tophat-1.4.0.tar.gz
+BWA=http://downloads.sourceforge.net/project/bio-bwa/bwa-0.6.1.tar.bz2
+
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
 TARNAME=$(notdir $(URL))
@@ -31,6 +38,7 @@ ifdef PREFIX
 else
     PREFIX_PARAM=
 endif
+DEFAULT_INSTALLATION_PREFIX=/usr/local
 
 CPAN_MODULES=\
 		YAML::XS \
@@ -175,6 +183,16 @@ all:
 	@echo "    nano          - GNU Nano text editor"
 	@echo "    pv            - Pipe Viewer"
 	@echo ""
+	@echo "  bioinfo         - build the packages below\:"
+	@echo ""
+	@echo "    samtools"
+	@echo "    bowtie"
+	@echo "    tophat"
+	@echo "    cufflinks"
+	@echo "    bwa"
+	@echo ""
+	@echo "  bioinfo_install - build & install the above BioInfo packages"
+	@echo ""
 	@echo "  common_install - Installs all the above pacakages."
 	@echo "                   Assumes 'common_build' was successfully executed."
 	@echo "                   (requires 'sudo')."
@@ -197,6 +215,15 @@ all:
 	@echo "                    Genominator, ShortRead, Rsamtools, limma, geneplotter,"
 	@echo "                    multicore"
 	@echo ""
+
+##
+## Helper variables, used later on - do not change.
+##
+SAMTOOLS_DIR=$(CURDIR)/$(basename $(basename $(notdir $(SAMTOOLS))))
+BWA_DIR=$(CURDIR)/$(basename $(basename $(notdir $(BWA))))
+
+
+
 
 .PHONY: cshl_centos
 cshl_centos:
@@ -238,7 +265,7 @@ $(DIRNAME)/configure:
 
 ## 3. run "./configure" to create the make files
 $(DIRNAME)/Makefile: $(DIRNAME)/configure
-	( cd "$(DIRNAME)" ; ./configure $(PREFIX_PARAM) )
+	( cd "$(DIRNAME)" ; ./configure $(PREFIX_PARAM) $(CONFIG_PARAMS) )
 
 ## 4. run "make" to build the package
 .PHONY: autoconf-step-make
@@ -338,6 +365,37 @@ R_packages:
 pigz:
 	$(MAKE) URL="$(PIGZ)" build-make-package
 
+.PHONY: samtools
+samtools:
+	$(MAKE) URL="$(SAMTOOLS)" build-make-package
+	@## Post-installation crap, create an "include" lib, to make "cufflinks" compile successfully
+	@## Alternatively: copy files to /usr/local/include and /usr/local/lib
+	mkdir -p $(SAMTOOLS_DIR)/include/bam
+	cp $(SAMTOOLS_DIR)/*.h $(SAMTOOLS_DIR)/include/bam/
+
+.PHONY: bwa
+bwa:
+	$(MAKE) URL="$(BWA)" build-make-package
+
+
+.PHONY: bowtie
+bowtie:
+	$(MAKE) URL="$(BOWTIE)" DIRNAME=bowtie-0.12.7 build-make-package
+
+.PHONY: tophat
+tophat: samtools
+	$(MAKE) URL="$(TOPHAT)" \
+		CONFIG_PARAMS="--with-bam=$(SAMTOOLS_DIR) --with-bam-libdir=$(SAMTOOLS_DIR)" \
+		build-autoconf-package
+
+.PHONY: cufflinks
+cufflinks: samtools
+	[ -r "$(SAMTOOLS_DIR)/include/bam/bam.h" ] || { echo -e "Error: samtools files ( $(SAMTOOLS_DIR)/include/bam/bam.h ) not found. Please compile SAMTOOLS before cufflinks, and prepare the ./include/bam sub directory.\n\"make samtools\" should do the job. " >&3 ; exit 1 ; }
+	$(MAKE) URL="$(CUFFLINKS)" \
+		CONFIG_PARAMS="--with-bam=$(SAMTOOLS_DIR) --with-bam-libdir=$(SAMTOOLS_DIR)" \
+		build-autoconf-package
+
+
 ## pigz doesn't have INSTALL target
 ## need to manually copy the executables
 .PHONY: pigz-install
@@ -367,3 +425,20 @@ common_install:
 	$(MAKE) URL="$(XZUTILS)" install-autoconf-package
 	$(MAKE) URL="$(NANO)" install-autoconf-package
 	$(MAKE) URL="$(PV)" install-autoconf-package
+
+
+##
+## no "proper" installation for samtools/bwa, just copy the files
+##
+.PHONY: samtools_install
+samtools_install:
+	cp $$(find $(SAMTOOLS_DIR) -type f -executable) $(DEFAULT_INSTALLATION_PREFIX)/bin
+
+.PHONY: bwa_install
+bwa_install:
+	cp $$(find $(BWA_DIR) -type f -executable) $(DEFAULT_INSTALLATION_PREFIX)/bin
+
+.PHONY: bioinfo_install
+bioinfo_install: samtools_install  bwa_install
+	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
+	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
