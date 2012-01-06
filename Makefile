@@ -209,6 +209,14 @@ all:
 	@echo "                    multicore"
 	@echo ""
 
+##
+## Helper variables, used later on - do not change.
+##
+SAMTOOLS_DIR=$(CURDIR)/$(basename $(basename $(notdir $(SAMTOOLS))))
+
+
+
+
 .PHONY: cshl_centos
 cshl_centos:
 	yum install $(CENTOS_PACKAGES)
@@ -249,7 +257,7 @@ $(DIRNAME)/configure:
 
 ## 3. run "./configure" to create the make files
 $(DIRNAME)/Makefile: $(DIRNAME)/configure
-	( cd "$(DIRNAME)" ; ./configure $(PREFIX_PARAM) )
+	( cd "$(DIRNAME)" ; ./configure $(PREFIX_PARAM) $(CONFIG_PARAMS) )
 
 ## 4. run "make" to build the package
 .PHONY: autoconf-step-make
@@ -352,14 +360,19 @@ pigz:
 .PHONY: samtools
 samtools:
 	$(MAKE) URL="$(SAMTOOLS)" build-make-package
+	@## Post-installation crap, create an "include" lib, to make "cufflinks" compile successfully
+	@## Alternatively: copy files to /usr/local/include and /usr/local/lib
+	mkdir -p $(SAMTOOLS_DIR)/include/bam
+	cp $(SAMTOOLS_DIR)/*.h $(SAMTOOLS_DIR)/include/bam/
 
 .PHONY: bowtie
 bowtie:
 	$(MAKE) URL="$(BOWTIE)" DIRNAME=bowtie-0.12.7 build-make-package
 
 .PHONY: cufflinks
-cufflinks:
-	$(MAKE) URL="$(CUFFLINKS)" build-autoconf-package
+cufflinks: samtools
+	[ -r "$(SAMTOOLS_DIR)/include/bam/bam.h" ] || { echo -e "Error: samtools files ( $(SAMTOOLS_DIR)/include/bam/bam.h ) not found. Please compile SAMTOOLS before cufflinks, and prepare the ./include/bam sub directory.\n\"make samtools\" should do the job. " >&3 ; exit 1 ; }
+	$(MAKE) URL="$(CUFFLINKS)" CONFIG_PARAMS="--with-bam=$(SAMTOOLS_DIR) --with-bam-libdir=$(SAMTOOLS_DIR)" build-autoconf-package
 
 
 ## pigz doesn't have INSTALL target
