@@ -11,6 +11,13 @@ PBZIP2=http://compression.ca/pbzip2/pbzip2-1.1.6.tar.gz
 TAR=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.gz
 NANO=http://www.nano-editor.org/dist/v2.2/nano-2.2.6.tar.gz
 PV=http://pipeviewer.googlecode.com/files/pv-1.2.0.tar.bz2
+R=http://cran.stat.ucla.edu/src/base/R-2/R-2.14.1.tar.gz
+#Hack: the custom installation prefix for R - not in the default /usr/local
+#      install it to something like /usr/local/R-2.14.1/
+R_PREFIX=/usr/local/$(basename $(basename $(notdir $(R))))
+R_BIN=$(R_PREFIX)/bin/R
+# hard-coded mirror, so that R doesn't pop-up the ugly Tcl GUI and ask for one.
+R_CRAN_MIRROR="http://R.research.att.com"
 
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
@@ -131,8 +138,21 @@ CENTOS_PACKAGES=\
 		wireshark.x86_64 \
 		zlib-devel.x86_64 \
 
+##BioConductor packages
+R_BIOC_PACKAGES= \
+	preprocessCore \
+	DESeq \
+	edgeR \
+	biomaRt \
+	GenomicRanges \
+	Genominator \
+	ShortRead \
+	Rsamtools \
+	limma \
+	geneplotter
 
-
+R_CRAN_PACKAGES= \
+	multicore
 
 all:
 	@echo "Possible Targets:"
@@ -161,6 +181,21 @@ all:
 	@echo "  cpan           - Install CPAN modules."
 	@echo ""
 	@echo "  cpan_dancer    - Install CPAN Dancer-related modules."
+	@echo ""
+	@echo "  R              - Build the latest R and BioConductor"
+	@echo "                   NOTE: it will be insalled in specific directory"
+	@echo "                         (e.g. /usr/local/R-2.14.1/) not in the default"
+	@echo "                         /usr/local/bin ."
+	@echo ""
+	@echo "  R_install       - Install the R software"
+	@echo "                    (requires sudo)"
+	@echo ""
+	@echo "  R_packages      - Install common R packages:"
+	@echo "                    (requires sudo)"
+	@echo "                    preprocessCore, DESeq, edgeR, biomaRt, GenomicRanges,"
+	@echo "                    Genominator, ShortRead, Rsamtools, limma, geneplotter,"
+	@echo "                    multicore"
+	@echo ""
 
 .PHONY: cshl_centos
 cshl_centos:
@@ -268,6 +303,35 @@ pv:
 .PHONY: xzutils
 xzutils:
 	$(MAKE) URL="$(XZUTILS)" build-autoconf-package
+
+.PHONY: R
+R:
+	$(MAKE) URL="$(R)" PREFIX="$(R_PREFIX)" build-autoconf-package
+
+.PHONY: R_install
+R_install:
+	$(MAKE) URL="$(R)" install-autoconf-package
+
+
+##This convoluted shell scripts generates R commands to install each package, e.g.:
+##	install.packages("multicore")
+##	source("http://bioconductor.org/biocLite.R")
+##	biocLite("preprocessCore")
+##	biocLite("DESeq")
+##	biocLite("edgeR")
+##	biocLite("biomaRt")
+
+R_BIOC_INSTALL_COMMANDS=$(patsubst %,biocLite(\"%\");\\n, $(R_BIOC_PACKAGES))
+R_CRAN_INSTALL_COMMANDS=$(patsubst %,install.packages(\"%\", repos=\"$(R_CRAN_MIRROR)\");\\n, $(R_CRAN_PACKAGES))
+
+.PHONY: R_packages
+R_packages:
+	@[ -x "$(R_BIN)" ] || { echo "Error: R binary ($(R_BIN)) not found. did you install the latest R?" >&2 ; exit 1 ; }
+	@( \
+	  printf "$(R_CRAN_INSTALL_COMMANDS)" ; \
+	  printf 'source("http://bioconductor.org/biocLite.R")\n' ;  \
+	  printf "$(R_BIOC_INSTALL_COMMANDS)" ; \
+	) | $(R_BIN) --vanilla
 
 .PHONY: pigz
 pigz:
