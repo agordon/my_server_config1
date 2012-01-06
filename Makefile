@@ -38,6 +38,7 @@ ifdef PREFIX
 else
     PREFIX_PARAM=
 endif
+DEFAULT_INSTALLATION_PREFIX=/usr/local
 
 CPAN_MODULES=\
 		YAML::XS \
@@ -190,6 +191,8 @@ all:
 	@echo "    cufflinks"
 	@echo "    bwa"
 	@echo ""
+	@echo "  bioinfo_install - build & install the above BioInfo packages"
+	@echo ""
 	@echo "  common_install - Installs all the above pacakages."
 	@echo "                   Assumes 'common_build' was successfully executed."
 	@echo "                   (requires 'sudo')."
@@ -217,6 +220,7 @@ all:
 ## Helper variables, used later on - do not change.
 ##
 SAMTOOLS_DIR=$(CURDIR)/$(basename $(basename $(notdir $(SAMTOOLS))))
+BWA_DIR=$(CURDIR)/$(basename $(basename $(notdir $(BWA))))
 
 
 
@@ -421,3 +425,20 @@ common_install:
 	$(MAKE) URL="$(XZUTILS)" install-autoconf-package
 	$(MAKE) URL="$(NANO)" install-autoconf-package
 	$(MAKE) URL="$(PV)" install-autoconf-package
+
+
+##
+## no "proper" installation for samtools/bwa, just copy the files
+##
+.PHONY: samtools_install
+samtools_install:
+	cp $$(find $(SAMTOOLS_DIR) -type f -executable) $(DEFAULT_INSTALLATION_PREFIX)/bin
+
+.PHONY: bwa_install
+bwa_install:
+	cp $$(find $(BWA_DIR) -type f -executable) $(DEFAULT_INSTALLATION_PREFIX)/bin
+
+.PHONY: bioinfo_install
+bioinfo_install: samtools_install  bwa_install
+	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
+	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
