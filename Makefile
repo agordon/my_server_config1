@@ -23,6 +23,7 @@ R_CRAN_MIRROR="http://R.research.att.com"
 SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samtools-0.1.18.tar.bz2
 BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
 CUFFLINKS=http://cufflinks.cbcb.umd.edu/downloads/cufflinks-1.3.0.tar.gz
+TOPHAT=http://tophat.cbcb.umd.edu/downloads/tophat-1.4.0.tar.gz
 
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
@@ -184,6 +185,7 @@ all:
 	@echo ""
 	@echo "    samtools"
 	@echo "    bowtie"
+	@echo "    tophat"
 	@echo "    cufflinks"
 	@echo ""
 	@echo "  common_install - Installs all the above pacakages."
@@ -369,10 +371,18 @@ samtools:
 bowtie:
 	$(MAKE) URL="$(BOWTIE)" DIRNAME=bowtie-0.12.7 build-make-package
 
+.PHONY: tophat
+tophat: samtools
+	$(MAKE) URL="$(TOPHAT)" \
+		CONFIG_PARAMS="--with-bam=$(SAMTOOLS_DIR) --with-bam-libdir=$(SAMTOOLS_DIR)" \
+		build-autoconf-package
+
 .PHONY: cufflinks
 cufflinks: samtools
 	[ -r "$(SAMTOOLS_DIR)/include/bam/bam.h" ] || { echo -e "Error: samtools files ( $(SAMTOOLS_DIR)/include/bam/bam.h ) not found. Please compile SAMTOOLS before cufflinks, and prepare the ./include/bam sub directory.\n\"make samtools\" should do the job. " >&3 ; exit 1 ; }
-	$(MAKE) URL="$(CUFFLINKS)" CONFIG_PARAMS="--with-bam=$(SAMTOOLS_DIR) --with-bam-libdir=$(SAMTOOLS_DIR)" build-autoconf-package
+	$(MAKE) URL="$(CUFFLINKS)" \
+		CONFIG_PARAMS="--with-bam=$(SAMTOOLS_DIR) --with-bam-libdir=$(SAMTOOLS_DIR)" \
+		build-autoconf-package
 
 
 ## pigz doesn't have INSTALL target
