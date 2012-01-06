@@ -152,6 +152,7 @@ R_BIOC_PACKAGES= \
 	geneplotter
 
 R_CRAN_PACKAGES= \
+	statmod \
 	multicore
 
 all:
