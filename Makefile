@@ -68,6 +68,8 @@ CPAN_MODULES=\
 		File::MimeInfo::Magic \
 		File::Slurp \
 		Number::Format \
+		Number::Bytes::Human \
+		CGI::Carp \
 		Sort::Key::Natural \
 		Template \
 		Variable::Magic \
