@@ -86,6 +86,7 @@ CPAN_DANCER_MODULES=\
 		Dancer::Plugin::EncodeID \
 		Dancer::Plugin::SimpleCRUD \
 		Dancer::Plugin::Passphrase \
+		Plack::Runner \
 		Authen::SASL::XS
 
 
