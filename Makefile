@@ -74,6 +74,7 @@ CPAN_MODULES=\
 		Template \
 		Variable::Magic \
 		Date::Manip \
+		Date::Manip::DM6 \
 		Pod::Readme \
 		Devel::CheckLib
 
