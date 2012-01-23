@@ -1,0 +1,8 @@
+Unzip - ( ftp://ftp.info-zip.org/pub/infozip/src/unzip60.zip )
+  need at least version 6.0 ( defaul CentOS 5.5 si version 5.52 - can't open newer files ).
+	wget ftp://ftp.info-zip.org/pub/infozip/src/unzip60.zip
+	unzip unzip60.zip
+	cd unzip60
+	cp unix/Makefile .
+	make generic
+	sudo cp unzip funzip /usr/local/bin
