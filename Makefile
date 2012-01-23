@@ -48,6 +48,7 @@ CPAN_MODULES=\
 		Test::Pod::Coverage \
 		Test::More \
 		Test::TCP \
+		Test::Inter \
 		DBD::SQLite \
 		DBD::mysql \
 		DBD::Pg \
@@ -76,6 +77,9 @@ CPAN_MODULES=\
 		Date::Manip \
 		Date::Manip::DM6 \
 		Pod::Readme \
+		Term::ReadLine \
+		Term::ReadLine::Gnu \
+		PerlConsole \
 		Devel::CheckLib
 
 CPAN_DANCER_MODULES=\
