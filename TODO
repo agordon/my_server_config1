@@ -6,3 +6,16 @@ Unzip - ( ftp://ftp.info-zip.org/pub/infozip/src/unzip60.zip )
 	cp unix/Makefile .
 	make generic
 	sudo cp unzip funzip /usr/local/bin
+
+BEDTools ( http://code.google.com/p/bedtools/ ) -
+	messy installation
+	download list:
+		http://code.google.com/p/bedtools/downloads/list
+	Direct Download:
+		http://bedtools.googlecode.com/files/BEDTools.v2.15.0.tar.gz
+
+	Directory name is not the same as the tarball name.
+	make
+	then manual copy to /usr/local/bin
+
+
