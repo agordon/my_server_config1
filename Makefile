@@ -342,7 +342,7 @@ xzutils:
 
 .PHONY: R
 R:
-	$(MAKE) URL="$(R)" PREFIX="$(R_PREFIX)" build-autoconf-package
+	$(MAKE) URL="$(R)" PREFIX="$(R_PREFIX)" CONFIG_PARAMS="--enable-R-shlib" build-autoconf-package
 
 .PHONY: R_install
 R_install:
