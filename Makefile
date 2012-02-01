@@ -96,11 +96,15 @@ CPAN_DANCER_MODULES=\
 		Dancer::Plugin::EncodeID \
 		Dancer::Plugin::SimpleCRUD \
 		Dancer::Plugin::Passphrase \
+		Dancer::Session::YAML \
+		Dancer::Session::Memcached \
 		Plack::Runner \
 		Authen::SASL::XS
 
 
 CENTOS_PACKAGES=\
+		memcached.x86_64 \
+		memcached-devel.x86_64 \
 		ImageMagick.x86_64 \
 		blas-devel.x86_64 \
 		blas.x86_64 \
