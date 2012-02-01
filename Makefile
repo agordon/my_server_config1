@@ -77,6 +77,7 @@ CPAN_MODULES=\
 		CGI::Carp \
 		Sort::Key::Natural \
 		Template \
+		Email::Valid \
 		Variable::Magic \
 		Date::Manip \
 		Date::Manip::DM6 \
