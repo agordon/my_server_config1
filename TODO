@@ -18,4 +18,24 @@ BEDTools ( http://code.google.com/p/bedtools/ ) -
 	make
 	then manual copy to /usr/local/bin
 
+Perl ( http://www.cpan.org/src/README.html )
 
+	wget http://www.cpan.org/src/5.0/perl-5.14.2.tar.gz
+	tar -xzf perl-5.14.2.tar.gz 
+	cd perl-5.14.2
+	./Configure -Dusethreads -des -Dprefix=/opt/perl-5.14.2
+	make
+	make install
+
+	## Issues:
+	##  1. "./Configure" instead of "./configure"
+	##  2. custom parameters ( "-Dprefix" instead of "--prefix" )
+	##  3. install to a custom location (not "/usr/local", to avoid messing up with the system)
+	##  4. need to create symlinks from:
+	##           /opt/perl-5.14.2/bin/*
+	##       to
+	##           /usr/local/bin
+	##     $ for i in /opt/perl-5.14.2/bin/* ; do sudo ln -s $i /usr/local/bin/ ; done
+
+	## NOTE:
+	##   if re-running "./Configure" - old values are sometimes retained. best to delete the source directory and start fresh.
