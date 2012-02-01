@@ -176,6 +176,11 @@ R_CRAN_PACKAGES= \
 	multicore
 
 all:
+	@echo "NOTE about 'sudo': you might need to use:"
+	@echo "     sudo -E make"
+	@echo "to enable sudo'd program to use locally insalled programs (based on your \$$PATH)"
+	@echo "(Especially relevaly for perl/cpan, and anything installed in /usr/local/bin/ )"
+	@echo ""
 	@echo "Possible Targets:"
 	@echo "  cshl_centos   - install needed CentOS packages."
 	@echo "                  (requires 'sudo')"
