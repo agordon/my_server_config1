@@ -55,6 +55,9 @@ CPAN_MODULES=\
 		Data::Dump \
 		Carp::Always \
 		Carp::Always::Color \
+		Class::Load \
+		Scalar::Util \
+		Math::Round \
 		DateTime \
 		JSON::XS \
 		JSON \
@@ -63,6 +66,7 @@ CPAN_MODULES=\
 		Text::CSV_XS \
 		URI::Escape:XS \
 		Compress::Bzip2 \
+		List::Util \
 		List::MoreUtils \
 		Data::Validate \
 		Data::Validate::Struct \
