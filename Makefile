@@ -85,6 +85,7 @@ CPAN_MODULES=\
 		Term::ReadLine \
 		Term::ReadLine::Gnu \
 		PerlConsole \
+		Moo \
 		Devel::CheckLib
 
 CPAN_DANCER_MODULES=\
