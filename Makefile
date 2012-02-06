@@ -11,6 +11,7 @@ PBZIP2=http://compression.ca/pbzip2/pbzip2-1.1.6.tar.gz
 TAR=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.gz
 NANO=http://www.nano-editor.org/dist/v2.2/nano-2.2.6.tar.gz
 PV=http://pipeviewer.googlecode.com/files/pv-1.2.0.tar.bz2
+PARALLEL=http://ftp.gnu.org/gnu/parallel/parallel-20120122.tar.bz2
 R=http://cran.stat.ucla.edu/src/base/R-2/R-2.14.1.tar.gz
 #Hack: the custom installation prefix for R - not in the default /usr/local
 #      install it to something like /usr/local/R-2.14.1/
@@ -205,6 +206,7 @@ all:
 	@echo "    pbzip2        - Parallel bzip2"
 	@echo "    nano          - GNU Nano text editor"
 	@echo "    pv            - Pipe Viewer"
+	@echo "    parallel      - GNU parallel and niceload"
 	@echo ""
 	@echo "  bioinfo         - build the packages below\:"
 	@echo ""
@@ -351,6 +353,10 @@ nano:
 pv:
 	$(MAKE) URL="$(PV)" build-autoconf-package
 
+.PHONY: parallel
+parallel:
+	$(MAKE) URL="$(PARALLEL)" build-autoconf-package
+
 .PHONY: xzutils
 xzutils:
 	$(MAKE) URL="$(XZUTILS)" build-autoconf-package
@@ -448,6 +454,7 @@ common_install:
 	$(MAKE) URL="$(XZUTILS)" install-autoconf-package
 	$(MAKE) URL="$(NANO)" install-autoconf-package
 	$(MAKE) URL="$(PV)" install-autoconf-package
+	$(MAKE) URL="$(PARALLEL)" install-autoconf-package
 
 
 ##
