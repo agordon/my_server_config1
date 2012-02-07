@@ -20,6 +20,12 @@ R_BIN=$(R_PREFIX)/bin/R
 # hard-coded mirror, so that R doesn't pop-up the ugly Tcl GUI and ask for one.
 R_CRAN_MIRROR="http://R.research.att.com"
 
+#Perl custom installation
+PERL=http://www.cpan.org/src/5.0/perl-5.14.2.tar.gz
+PERL_TARNAME=$(notdir $(PERL))
+PERL_BASENAME=$(basename $(basename $(PERL_TARNAME)))
+PERL_DEST=/opt/$(PERL_BASENAME)/
+
 #BIOINFO PACKAGES
 SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samtools-0.1.18.tar.bz2
 BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
@@ -207,6 +213,9 @@ all:
 	@echo "    nano          - GNU Nano text editor"
 	@echo "    pv            - Pipe Viewer"
 	@echo "    parallel      - GNU parallel and niceload"
+	@echo ""
+	@echo "  perl            - download and build perl"
+	@echo "  perl-install    - install perl into /opt/ , create symlinks in ~/bin/"
 	@echo ""
 	@echo "  bioinfo         - build the packages below\:"
 	@echo ""
@@ -472,3 +481,44 @@ bwa_install:
 bioinfo_install: samtools_install  bwa_install
 	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
 	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
+
+
+##
+## Perl requires custom commands :(
+##
+.PHONY: perl
+perl:
+	rm -rf ./$(PERL_BASENAME)
+	rm -rf ./$(PERL_TARNAME)
+	( wget "$(PERL)" && \
+	tar -xzf $(PERL_TARNAME) && \
+	cd $(PERL_BASENAME) && \
+	./Configure -Dusethreads -des -Dprefix=$(PERL_DEST) && \
+	make )
+	@echo
+	@echo "Perl is compiled. To install:"
+	@echo "  $$ sudo make perl-install"
+	@echo
+	@echo "Will install perl in /opt/ and create symlinks in /usr/local/bin/perl-X.Y.Z"
+	@echo
+	@echo "The system's perl WILL NOT be overridden."
+	@echo
+
+## Custom perl installation:
+##  install to /opt/perl-X.Y.Z,
+##  then create symlinks to /usr/local/bin/perl-X.Y.Z
+.PHONY: perl-install
+perl-install: $(PERL_BASENAME)/perl
+	( cd $(PERL_BASENAME) && make install )
+	ln -s $(PERL_DEST)/bin /usr/local/bin/$(PERL_BASENAME)
+	@echo
+	@echo
+	@echo "Perl is installed in $(PERL_DEST)"
+	@echo
+	@echo "perl executables are symlinked in '/usr/local/bin/$(PERL_BASENAME)/'"
+	@echo
+	@echo "To use it, add it to your PATH, as so:"
+	@echo "  export PATH=/usr/local/bin/$(PERL_BASENAME):$$PATH"
+	@echo
+	@echo "Don't forget to install cpan modules (e.g. 'sudo -E make cpan') after updating your PATH".
+	@echo
