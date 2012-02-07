@@ -527,15 +527,14 @@ perl:
 .PHONY: perl-install
 perl-install: $(PERL_BASENAME)/perl
 	( cd $(PERL_BASENAME) && make install )
-	ln -s $(PERL_DEST)/bin /usr/local/bin/$(PERL_BASENAME)
 	@echo
 	@echo
 	@echo "Perl is installed in $(PERL_DEST)"
 	@echo
-	@echo "perl executables are symlinked in '/usr/local/bin/$(PERL_BASENAME)/'"
+	@echo "perl executables are symlinked in '$(PERL_DEST)/bin'
 	@echo
 	@echo "To use it, add it to your PATH, as so:"
-	@echo "  export PATH=/usr/local/bin/$(PERL_BASENAME):$$PATH"
+	@echo "  export PATH=$(PERL_DEST)/bin:$$PATH"
 	@echo
 	@echo "Don't forget to install cpan modules (e.g. 'sudo -E make cpan') after updating your PATH".
 	@echo
