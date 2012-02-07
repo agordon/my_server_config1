@@ -26,6 +26,11 @@ PERL_TARNAME=$(notdir $(PERL))
 PERL_BASENAME=$(basename $(basename $(PERL_TARNAME)))
 PERL_DEST=/opt/$(PERL_BASENAME)/
 
+#UNZIP custom installation
+UNZIP=ftp://ftp.info-zip.org/pub/infozip/src/unzip60.zip
+UNZIP_ZIPNAME=$(notdir $(UNZIP))
+UNZIP_BASENAME=$(basename $(UNZIP_ZIPNAME))
+
 #BIOINFO PACKAGES
 SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samtools-0.1.18.tar.bz2
 BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
@@ -216,6 +221,9 @@ all:
 	@echo ""
 	@echo "  perl            - download and build perl"
 	@echo "  perl-install    - install perl into /opt/ , create symlinks in ~/bin/"
+	@echo
+	@echo "  unzip           - download and build latest unzip"
+	@echo "  unzip-install   - install unzip to /usr/local/bin"
 	@echo ""
 	@echo "  bioinfo         - build the packages below\:"
 	@echo ""
@@ -522,3 +530,21 @@ perl-install: $(PERL_BASENAME)/perl
 	@echo
 	@echo "Don't forget to install cpan modules (e.g. 'sudo -E make cpan') after updating your PATH".
 	@echo
+
+##
+## Unzip needs custom commands
+## (assumes there's an old "unzip" already installed...)
+.PHONY: unzip
+unzip:
+	rm -rf ./$(UNZIP_ZIPNAME)
+	rm -rf ./$(UNZIP_BASENAME)
+	wget $(UNZIP)
+	unzip $(UNZIP_ZIPNAME)
+	( cd unzip60 && \
+	  cp unix/Makefile . && \
+	  make generic )
+
+.PHONY: unzip-install
+unzip-install: $(UNZIP_BASENAME)/unzip
+	( cd $(UNZIP_BASENAME) && \
+	  cp unzip funzip /usr/local/bin )
