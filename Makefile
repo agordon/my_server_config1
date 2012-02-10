@@ -191,6 +191,7 @@ R_BIOC_PACKAGES= \
 
 R_CRAN_PACKAGES= \
 	statmod \
+	UsingR \
 	multicore
 
 all:
