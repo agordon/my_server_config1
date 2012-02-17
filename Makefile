@@ -39,6 +39,10 @@ CUFFLINKS=http://cufflinks.cbcb.umd.edu/downloads/cufflinks-1.3.0.tar.gz
 TOPHAT=http://tophat.cbcb.umd.edu/downloads/tophat-1.4.1.tar.gz
 BWA=http://downloads.sourceforge.net/project/bio-bwa/bwa-0.6.1.tar.bz2
 
+#BOWTIE Custom installation
+BOWTIE_ZIP=$(notdir $(BOWTIE))
+BOWTIE_DIR=$(subst -src,,$(basename $(BOWTIE_ZIP)))
+
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
 TARNAME=$(notdir $(URL))
@@ -438,9 +442,12 @@ bwa:
 	$(MAKE) URL="$(BWA)" build-make-package
 
 
+##Annoying bowtie uses "zip" and needs special handling
 .PHONY: bowtie
 bowtie:
-	#$(MAKE) URL="$(BOWTIE)" DIRNAME=bowtie-0.12.7 build-make-package
+	( [ -e "$(BOWTIE_ZIP)" ] || wget "$(BOWTIE)" )
+	( [ -d "$(BOWTIE_DIR)" ] || unzip -o "$(BOWTIE_ZIP)" )
+	( cd "$(BOWTIE_DIR)" && $(MAKE) )
 
 .PHONY: tophat
 tophat: samtools
@@ -500,11 +507,16 @@ samtools_install:
 bwa_install:
 	cp $$(find $(BWA_DIR) -type f -executable) $(DEFAULT_INSTALLATION_PREFIX)/bin
 
+.PHONY: bowtie-install
+bowtie-install:
+	cp $(BOWTIE_DIR)/{bowtie,bowtie-build,bowtie-inspect} $(DEFAULT_INSTALLATION_PREFIX)/bin
+
+
 .PHONY: bioinfo
 bioinfo: samtools bowtie bwa bedtools tophat cufflinks
 
 .PHONY: bioinfo-install
-bioinfo-install: samtools_install  bwa_install
+bioinfo-install: samtools_install  bwa_install bowtie-install
 	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
 	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
 	$(MAKE) bedtools-install
