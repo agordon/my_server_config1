@@ -12,6 +12,7 @@ TAR=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.gz
 NANO=http://www.nano-editor.org/dist/v2.2/nano-2.2.6.tar.gz
 PV=http://pipeviewer.googlecode.com/files/pv-1.2.0.tar.bz2
 PARALLEL=http://ftp.gnu.org/gnu/parallel/parallel-20120122.tar.bz2
+BEDTOOLS_GIT=https://github.com/arq5x/bedtools.git
 
 
 #R custom installation
@@ -227,6 +228,9 @@ all:
 	@echo
 	@echo "  unzip           - download and build latest unzip"
 	@echo "  unzip-install   - install unzip to /usr/local/bin"
+	@echo ""
+	@echo "  bedtools        - fetch the latest vesion of Bedtools (from github)"
+	@echo "  bedtools-install- copy 'bedtools' to /usrlocal/bin"
 	@echo ""
 	@echo "  bioinfo         - build the packages below\:"
 	@echo ""
@@ -559,3 +563,16 @@ unzip:
 unzip-install: $(UNZIP_BASENAME)/unzip
 	( cd $(UNZIP_BASENAME) && \
 	  cp unzip funzip /usr/local/bin )
+
+.PHONY: bedtools
+bedtools:
+	[ -d "bedtools" ] || git clone $(BEDTOOLS_GIT) bedtools
+	( cd "bedtools" ; \
+	  git pull ; \
+	  $(MAKE) clean ; \
+	  $(MAKE) ; \
+	)
+
+.PHONY: bedtools-install
+bedtools-install:
+	cp ./bedtools/bin/bedtools /usr/local/bin
