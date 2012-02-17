@@ -12,7 +12,7 @@ TAR=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.gz
 NANO=http://www.nano-editor.org/dist/v2.2/nano-2.2.6.tar.gz
 PV=http://pipeviewer.googlecode.com/files/pv-1.2.0.tar.bz2
 PARALLEL=http://ftp.gnu.org/gnu/parallel/parallel-20120122.tar.bz2
-BEDTOOLS_GIT=https://github.com/arq5x/bedtools.git
+BEDTOOLS_GIT=git://github.com/arq5x/bedtools.git
 
 
 #R custom installation
@@ -340,7 +340,6 @@ common-build: xzutils \
 	pbzip2 \
 	nano \
 	unzip \
-	bedtools \
 	pv
 
 
