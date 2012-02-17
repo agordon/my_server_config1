@@ -515,7 +515,7 @@ cufflinks: samtools
 ## need to manually copy the executables
 .PHONY: pigz-install
 pigz-install:
-	( [ -d "$(DIRNAME)" ] && ( cd "$(DIRNAME)" ; cp pigz unpigz /usr/local/bin/ ) )
+	( [ -d "$(DIRNAME)" ] && ( cd "$(DIRNAME)" ; cp pigz unpigz $(DEFAULT_INSTALLATION_PREFIX)/bin/ ) )
 
 .PHONY: pbzip2
 pbzip2:
@@ -524,7 +524,7 @@ pbzip2:
 ## pbzip2 requires customized installation command (with PREFIX)
 .PHONY: pbzip2-install
 pbzip2-install:
-	( cd "$(DIRNAME)" ; $(MAKE) PREFIX=/usr/local/ install )
+	( cd "$(DIRNAME)" ; $(MAKE) PREFIX=$(DEFAULT_INSTALLATION_PREFIX)/ install )
 
 
 .PHONY: common-install
@@ -589,7 +589,7 @@ perl:
 	@echo "Perl is compiled. To install:"
 	@echo "  $$ sudo make perl-install"
 	@echo
-	@echo "Will install perl in /opt/ and create symlinks in /usr/local/bin/perl-X.Y.Z"
+	@echo "Will install perl in /opt/perl-X.Y.Z/bin "
 	@echo
 	@echo "The system's perl WILL NOT be overridden."
 	@echo
@@ -628,7 +628,7 @@ unzip:
 .PHONY: unzip-install
 unzip-install: $(UNZIP_BASENAME)/unzip
 	( cd $(UNZIP_BASENAME) && \
-	  cp unzip funzip /usr/local/bin )
+	  cp unzip funzip $(DEFAULT_INSTALLATION_PREFIX)/bin/ )
 	@echo ""
 
 .PHONY: bedtools
@@ -642,7 +642,7 @@ bedtools:
 
 .PHONY: bedtools-install
 bedtools-install:
-	cp ./bedtools/bin/bedtools /usr/local/bin
+	cp ./bedtools/bin/bedtools $(DEFAULT_INSTALLATION_PREFIX)/bin/
 
 .PHONY: jktools
 jktools:
