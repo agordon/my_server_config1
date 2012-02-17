@@ -36,7 +36,7 @@ UNZIP_BASENAME=$(basename $(UNZIP_ZIPNAME))
 SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samtools-0.1.18.tar.bz2
 BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
 CUFFLINKS=http://cufflinks.cbcb.umd.edu/downloads/cufflinks-1.3.0.tar.gz
-TOPHAT=http://tophat.cbcb.umd.edu/downloads/tophat-1.4.0.tar.gz
+TOPHAT=http://tophat.cbcb.umd.edu/downloads/tophat-1.4.1.tar.gz
 BWA=http://downloads.sourceforge.net/project/bio-bwa/bwa-0.6.1.tar.bz2
 
 # Default URL is dummy. Use must specify a valid one
