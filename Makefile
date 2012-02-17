@@ -43,6 +43,12 @@ BWA=http://downloads.sourceforge.net/project/bio-bwa/bwa-0.6.1.tar.bz2
 BOWTIE_ZIP=$(notdir $(BOWTIE))
 BOWTIE_DIR=$(subst -src,,$(basename $(BOWTIE_ZIP)))
 
+BOWTIE2=http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.0.0-beta5/bowtie2-2.0.0-beta5.zip
+#BOWTIE2 Custom installation
+BOWTIE2_ZIP=$(notdir $(BOWTIE2))
+BOWTIE2_DIR=$(basename $(BOWTIE2_ZIP))
+
+
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
 TARNAME=$(notdir $(URL))
@@ -239,6 +245,7 @@ all:
 	@echo ""
 	@echo "    samtools"
 	@echo "    bowtie"
+	@echo "    bowtie2"
 	@echo "    tophat"
 	@echo "    cufflinks"
 	@echo "    bwa"
@@ -449,6 +456,12 @@ bowtie:
 	( [ -d "$(BOWTIE_DIR)" ] || unzip -o "$(BOWTIE_ZIP)" )
 	( cd "$(BOWTIE_DIR)" && $(MAKE) )
 
+.PHONY: bowtie2
+bowtie2:
+	( [ -e "$(BOWTIE2_ZIP)" ] || wget "$(BOWTIE2)" )
+	( [ -d "$(BOWTIE2_DIR)" ] || unzip -o "$(BOWTIE2_ZIP)" )
+	( cd "$(BOWTIE2_DIR)" && $(MAKE) )
+
 .PHONY: tophat
 tophat: samtools
 	$(MAKE) URL="$(TOPHAT)" \
@@ -510,6 +523,10 @@ bwa_install:
 .PHONY: bowtie-install
 bowtie-install:
 	cp $(BOWTIE_DIR)/{bowtie,bowtie-build,bowtie-inspect} $(DEFAULT_INSTALLATION_PREFIX)/bin
+
+.PHONY: bowtie2-install
+bowtie2-install:
+	cp $(BOWTIE2_DIR)/{bowtie2,bowtie2-build,bowtie2-align,bowtie2-inspect} $(DEFAULT_INSTALLATION_PREFIX)/bin
 
 
 .PHONY: bioinfo
