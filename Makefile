@@ -48,6 +48,40 @@ BOWTIE2=http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.0.0-beta5/bow
 BOWTIE2_ZIP=$(notdir $(BOWTIE2))
 BOWTIE2_DIR=$(basename $(BOWTIE2_ZIP))
 
+## The pre-compiled x86-x64 binaries of Jim Kent's UCSC command-line utilities
+JKTOOLS_DIR=ucsc_jktools
+JKTOOLS_URL=http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
+JKTOOLS_EXES=bedClip \
+	     bedGraphToBigWig \
+	     bedToBigBed \
+	     bigBedInfo \
+	     bigBedToBed \
+	     bigBedSummary \
+	     bigWigAverageOverBed \
+	     bigWigInfo \
+	     bigWigSummary \
+	     bigWigToBedGraph \
+	     bigWigToWig \
+	     faToNib \
+	     faToTwoBit \
+	     genePredToGtf \
+	     gff3ToGenePred \
+	     gtfToGenePred \
+	     htmlCheck \
+	     hubCheck \
+	     liftOver \
+	     pslCDnaFilter \
+	     pslPretty \
+	     pslReps \
+	     pslSort \
+	     twoBitInfo \
+	     twoBitToFa \
+	     wigCorrelate \
+	     wigToBigWig \
+	     blat/blat \
+	     blat/gfClient \
+	     blat/gfServer
+
 
 # Default URL is dummy. Use must specify a valid one
 URL=foo://must/replace/this/with/real/url/of/package
@@ -250,6 +284,7 @@ all:
 	@echo "    cufflinks"
 	@echo "    bwa"
 	@echo "    bedtools"
+	@echo "    jktools (common UCSC command-line tools)"
 	@echo ""
 	@echo "  bioinfo-install - build & install the above BioInfo packages"
 	@echo ""
@@ -530,13 +565,12 @@ bowtie2-install:
 
 
 .PHONY: bioinfo
-bioinfo: samtools bowtie bwa bedtools tophat cufflinks
+bioinfo: samtools bowtie bwa bedtools tophat cufflinks jktools
 
 .PHONY: bioinfo-install
-bioinfo-install: samtools_install  bwa_install bowtie-install
+bioinfo-install: samtools_install  bwa_install bowtie-install jktools-install bedtools-install
 	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
 	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
-	$(MAKE) bedtools-install
 
 
 ##
@@ -609,3 +643,17 @@ bedtools:
 .PHONY: bedtools-install
 bedtools-install:
 	cp ./bedtools/bin/bedtools /usr/local/bin
+
+.PHONY: jktools
+jktools:
+	mkdir -p $(JKTOOLS_DIR)
+	( cd $(JKTOOLS_DIR) ; \
+	  for TOOL in $(JKTOOLS_EXES) ; \
+	  do \
+		rm -f $${TOOL} ; \
+		wget $(JKTOOLS_URL)/$${TOOL} || exit 1; \
+	  done );
+
+.PHONY: jktools-install
+jktools-install:
+	cp $(JKTOOLS_DIR)/* $(DEFAULT_INSTALLATION_PREFIX)/bin/
