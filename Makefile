@@ -207,7 +207,7 @@ all:
 	@echo "  cshl_centos   - install needed CentOS packages."
 	@echo "                  (requires 'sudo')"
 	@echo ""
-	@echo "  common_build  - build all the packages listed below\:"
+	@echo "  common-build  - build all the packages listed below:"
 	@echo ""
 	@echo "    coreutils     - GNU coreutils"
 	@echo "    tar           - GNU tar"
@@ -222,15 +222,14 @@ all:
 	@echo "    nano          - GNU Nano text editor"
 	@echo "    pv            - Pipe Viewer"
 	@echo "    parallel      - GNU parallel and niceload"
+	@echo "    unzip         - unzip"
+	@echo ""
+	@echo "  common-install - Installs all the above pacakages."
+	@echo "                   Assumes 'common-build' was successfully executed."
+	@echo "                   (requires 'sudo')."
 	@echo ""
 	@echo "  perl            - download and build perl"
 	@echo "  perl-install    - install perl into /opt/ , create symlinks in ~/bin/"
-	@echo
-	@echo "  unzip           - download and build latest unzip"
-	@echo "  unzip-install   - install unzip to /usr/local/bin"
-	@echo ""
-	@echo "  bedtools        - fetch the latest vesion of Bedtools (from github)"
-	@echo "  bedtools-install- copy 'bedtools' to /usrlocal/bin"
 	@echo ""
 	@echo "  bioinfo         - build the packages below\:"
 	@echo ""
@@ -239,12 +238,9 @@ all:
 	@echo "    tophat"
 	@echo "    cufflinks"
 	@echo "    bwa"
+	@echo "    bedtools"
 	@echo ""
-	@echo "  bioinfo_install - build & install the above BioInfo packages"
-	@echo ""
-	@echo "  common_install - Installs all the above pacakages."
-	@echo "                   Assumes 'common_build' was successfully executed."
-	@echo "                   (requires 'sudo')."
+	@echo "  bioinfo-install - build & install the above BioInfo packages"
 	@echo ""
 	@echo "  cpan           - Install CPAN modules."
 	@echo ""
@@ -285,8 +281,8 @@ cpan:
 cpan_dancer:
 	PERL_MM_USE_DEFAULT=1 cpan $(CPAN_DANCER_MODULES)
 
-.PHONY: common_build
-common_build: xzutils \
+.PHONY: common-build
+common-build: xzutils \
 	tar \
 	findutils \
 	grep \
@@ -297,6 +293,8 @@ common_build: xzutils \
 	pigz \
 	pbzip2 \
 	nano \
+	unzip \
+	bedtools \
 	pv
 
 
@@ -442,7 +440,7 @@ bwa:
 
 .PHONY: bowtie
 bowtie:
-	$(MAKE) URL="$(BOWTIE)" DIRNAME=bowtie-0.12.7 build-make-package
+	#$(MAKE) URL="$(BOWTIE)" DIRNAME=bowtie-0.12.7 build-make-package
 
 .PHONY: tophat
 tophat: samtools
@@ -474,8 +472,8 @@ pbzip2-install:
 	( cd "$(DIRNAME)" ; $(MAKE) PREFIX=/usr/local/ install )
 
 
-.PHONY: common_install
-common_install:
+.PHONY: common-install
+common-install:
 	$(MAKE) URL="$(PIGZ)" pigz-install
 	$(MAKE) URL="$(PBZIP2)" pbzip2-install
 	$(MAKE) URL="$(COREUTILS)" install-autoconf-package
@@ -488,6 +486,7 @@ common_install:
 	$(MAKE) URL="$(NANO)" install-autoconf-package
 	$(MAKE) URL="$(PV)" install-autoconf-package
 	$(MAKE) URL="$(PARALLEL)" install-autoconf-package
+	$(MAKE) unzip-install
 
 
 ##
@@ -501,10 +500,14 @@ samtools_install:
 bwa_install:
 	cp $$(find $(BWA_DIR) -type f -executable) $(DEFAULT_INSTALLATION_PREFIX)/bin
 
-.PHONY: bioinfo_install
-bioinfo_install: samtools_install  bwa_install
+.PHONY: bioinfo
+bioinfo: samtools bowtie bwa bedtools tophat cufflinks
+
+.PHONY: bioinfo-install
+bioinfo-install: samtools_install  bwa_install
 	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
 	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
+	$(MAKE) bedtools-install
 
 
 ##
@@ -563,6 +566,7 @@ unzip:
 unzip-install: $(UNZIP_BASENAME)/unzip
 	( cd $(UNZIP_BASENAME) && \
 	  cp unzip funzip /usr/local/bin )
+	@echo ""
 
 .PHONY: bedtools
 bedtools:
