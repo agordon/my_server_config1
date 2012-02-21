@@ -163,6 +163,7 @@ CPAN_DANCER_MODULES=\
 CENTOS_PACKAGES=\
 		memcached.x86_64 \
 		memcached-devel.x86_64 \
+		units.x86_64 \
 		ImageMagick.x86_64 \
 		blas-devel.x86_64 \
 		blas.x86_64 \
