@@ -13,6 +13,7 @@ NANO=http://www.nano-editor.org/dist/v2.2/nano-2.2.6.tar.gz
 PV=http://pipeviewer.googlecode.com/files/pv-1.2.0.tar.bz2
 PARALLEL=http://ftp.gnu.org/gnu/parallel/parallel-20120122.tar.bz2
 BEDTOOLS_GIT=git://github.com/arq5x/bedtools.git
+PIXELBEAT_GIT=git://github.com/pixelb/scripts.git
 
 
 #R custom installation
@@ -268,6 +269,7 @@ all:
 	@echo "    pv            - Pipe Viewer"
 	@echo "    parallel      - GNU parallel and niceload"
 	@echo "    unzip         - unzip"
+	@echo "    pixelbeat     - Some excellent shell scripts from P@draigBrady.com"
 	@echo ""
 	@echo "  common-install - Installs all the above pacakages."
 	@echo "                   Assumes 'common-build' was successfully executed."
@@ -341,6 +343,7 @@ common-build: xzutils \
 	pbzip2 \
 	nano \
 	unzip \
+	pixelbeat \
 	pv
 
 
@@ -542,6 +545,7 @@ common-install:
 	$(MAKE) URL="$(PV)" install-autoconf-package
 	$(MAKE) URL="$(PARALLEL)" install-autoconf-package
 	$(MAKE) unzip-install
+	$(MAKE) pixelbeat-install
 
 
 ##
@@ -657,3 +661,12 @@ jktools:
 .PHONY: jktools-install
 jktools-install:
 	cp $(JKTOOLS_DIR)/* $(DEFAULT_INSTALLATION_PREFIX)/bin/
+
+.PHONY: pixelbeat
+pixelbeat:
+	[ -d "pixelbeat_scripts" ] || git clone $(PIXELBEAT_GIT) pixelbeat_scripts
+	( cd "pixelbeat_scripts" ; git pull ; )
+
+.PHONY: pixelbeat-install
+pixelbeat-install:
+	cp ./pixelbeat_scripts/scripts/{ansi_colours.sh,ansi2html.sh,human.py,ps_mem.py,sysinfo,tcpdump_not_me} $(DEFAULT_INSTALLATION_PREFIX)/bin/
