@@ -654,7 +654,7 @@ jktools:
 	( cd $(JKTOOLS_DIR) ; \
 	  for TOOL in $(JKTOOLS_EXES) ; \
 	  do \
-		rm -f $${TOOL} ; \
+		rm -f $$(basename $${TOOL}) ; \
 		wget $(JKTOOLS_URL)/$${TOOL} || exit 1; \
 	  done );
 
