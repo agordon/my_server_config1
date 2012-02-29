@@ -174,6 +174,7 @@ CENTOS_PACKAGES=\
 		bzip2-devel.x86_64 \
 		bzip2.x86_64 \
 		ctags.x86_64 \
+		cmake.x86_64 \
 		curl-devel.x86_64 \
 		curl-devel.x86_64 \
 		dos2unix.x86_64 \
