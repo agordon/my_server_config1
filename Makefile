@@ -14,6 +14,7 @@ PV=http://pipeviewer.googlecode.com/files/pv-1.2.0.tar.bz2
 PARALLEL=http://ftp.gnu.org/gnu/parallel/parallel-20120122.tar.bz2
 BEDTOOLS_GIT=git://github.com/arq5x/bedtools.git
 PIXELBEAT_GIT=git://github.com/pixelb/scripts.git
+BAMTOOLS_GIT=git://github.com/pezmaster31/bamtools.git
 
 
 #R custom installation
@@ -288,6 +289,7 @@ all:
 	@echo "    cufflinks"
 	@echo "    bwa"
 	@echo "    bedtools"
+	@echo "    bamtools"
 	@echo "    jktools (common UCSC command-line tools)"
 	@echo ""
 	@echo "  bioinfo-install - build & install the above BioInfo packages"
@@ -570,10 +572,10 @@ bowtie2-install:
 
 
 .PHONY: bioinfo
-bioinfo: samtools bowtie bwa bedtools tophat cufflinks jktools
+bioinfo: samtools bowtie bwa bedtools bamtools tophat cufflinks jktools
 
 .PHONY: bioinfo-install
-bioinfo-install: samtools_install  bwa_install bowtie-install jktools-install bedtools-install
+bioinfo-install: samtools_install  bwa_install bowtie-install jktools-install bedtools-install bamtools-install
 	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
 	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
 
@@ -648,6 +650,24 @@ bedtools:
 .PHONY: bedtools-install
 bedtools-install:
 	cp ./bedtools/bin/bedtools $(DEFAULT_INSTALLATION_PREFIX)/bin/
+
+.PHONY: bamtools
+bamtools:
+	[ -d "bamtools" ] || git clone $(BAMTOOLS_GIT) bamtools
+	( cd "bamtools" && \
+	  git pull && \
+	  rm -rf ./build && \
+	  mkdir -p ./build && \
+	  cd ./build && \
+	  cmake .. && \
+	  make \
+	)
+
+.PHONY: bamtools-install
+bamtools-install:
+	( cd ./bamtools/build && make install )
+	## NOTE: "make install" doesn't put the libraries in the right place, so copy them manually
+	cp ./bamtools/lib/* $(DEFAULT_INSTALLATION_PREFIX)/lib/
 
 .PHONY: jktools
 jktools:
