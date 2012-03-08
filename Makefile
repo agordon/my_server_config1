@@ -17,6 +17,7 @@ PIXELBEAT_GIT=git://github.com/pixelb/scripts.git
 BAMTOOLS_GIT=git://github.com/pezmaster31/bamtools.git
 
 
+
 #R custom installation
 R=http://cran.stat.ucla.edu/src/base/R-2/R-2.14.1.tar.gz
 R_PREFIX=/opt/$(basename $(basename $(notdir $(R))))
