@@ -237,6 +237,7 @@ R_BIOC_PACKAGES= \
 	ShortRead \
 	Rsamtools \
 	limma \
+	cummeRbund \
 	geneplotter
 
 R_CRAN_PACKAGES= \
