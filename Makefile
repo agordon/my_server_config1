@@ -238,6 +238,7 @@ R_BIOC_PACKAGES= \
 	Rsamtools \
 	limma \
 	cummeRbund \
+	golub \
 	geneplotter
 
 R_CRAN_PACKAGES= \
@@ -245,6 +246,7 @@ R_CRAN_PACKAGES= \
 	UsingR \
 	doBy \
 	gplots \
+	ape \
 	multicore
 
 all:
