@@ -238,7 +238,7 @@ R_BIOC_PACKAGES= \
 	Rsamtools \
 	limma \
 	cummeRbund \
-	golub \
+	multtest \
 	geneplotter
 
 R_CRAN_PACKAGES= \
