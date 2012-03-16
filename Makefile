@@ -221,6 +221,10 @@ CENTOS_PACKAGES=\
 		sqlite.x86_64 \
 		strace.x86_64 \
 		tcpdump.x86_64 \
+		tk.x86_64 \
+		tk-devel.x86_64 \
+		tktable.x86_64 \
+		bwidget.noarch \
 		valgrind.x86_64 \
 		vim-enhanced.x86_64 \
 		wireshark.x86_64 \
@@ -239,6 +243,10 @@ R_BIOC_PACKAGES= \
 	limma \
 	cummeRbund \
 	multtest \
+	GeneR \
+	mircoRNA \
+	biomaRt \
+	mirbase.db \
 	geneplotter
 
 R_CRAN_PACKAGES= \
