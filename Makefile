@@ -255,6 +255,7 @@ R_CRAN_PACKAGES= \
 	doBy \
 	gplots \
 	ape \
+	TeachingDemos \
 	multicore
 
 all:
