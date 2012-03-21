@@ -15,8 +15,7 @@ PARALLEL=http://ftp.gnu.org/gnu/parallel/parallel-20120122.tar.bz2
 BEDTOOLS_GIT=git://github.com/arq5x/bedtools.git
 PIXELBEAT_GIT=git://github.com/pixelb/scripts.git
 BAMTOOLS_GIT=git://github.com/pezmaster31/bamtools.git
-
-
+FILO_GIT=git://github.com/agordon/filo.git
 
 #R custom installation
 R=http://cran.stat.ucla.edu/src/base/R-2/R-2.14.1.tar.gz
@@ -285,6 +284,7 @@ all:
 	@echo "    parallel      - GNU parallel and niceload"
 	@echo "    unzip         - unzip"
 	@echo "    pixelbeat     - Some excellent shell scripts from P@draigBrady.com"
+	@echo "    filo          - file processing scripts"
 	@echo ""
 	@echo "  common-install - Installs all the above pacakages."
 	@echo "                   Assumes 'common-build' was successfully executed."
@@ -360,6 +360,7 @@ common-build: xzutils \
 	nano \
 	unzip \
 	pixelbeat \
+	filo \
 	pv
 
 
@@ -681,6 +682,20 @@ bamtools-install:
 	( cd ./bamtools/build && make install )
 	## NOTE: "make install" doesn't put the libraries in the right place, so copy them manually
 	cp ./bamtools/lib/* $(DEFAULT_INSTALLATION_PREFIX)/lib/
+
+.PHONY: filo
+filo:
+	rm -rf ./filo
+	# NOTE: I only need the scripts from "filo", so I don't run "make" to compile the programs
+	( git clone $(FILO_GIT) filo && \
+	  cd "filo" && \
+	  git checkout origin/scripts \
+	)
+
+.PHONY: filo-install
+filo-install:
+	## NOTE: "make install" doesn't put the libraries in the right place, so copy them manually
+	cp ./filo/src/scripts/{easyjoin,sort-header,multijoin,tawk,tuniq-c} $(DEFAULT_INSTALLATION_PREFIX)/bin/
 
 .PHONY: jktools
 jktools:
