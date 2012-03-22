@@ -253,6 +253,8 @@ R_CRAN_PACKAGES= \
 	UsingR \
 	doBy \
 	gplots \
+	getopt \
+	optparse \
 	ape \
 	TeachingDemos \
 	multicore
