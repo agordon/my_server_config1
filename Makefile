@@ -228,6 +228,8 @@ CENTOS_PACKAGES=\
 		vim-enhanced.x86_64 \
 		wireshark.x86_64 \
 		zlib-devel.x86_64 \
+		atlas.x86_64 \
+		atlas-devel.x86_64
 
 ##BioConductor packages
 R_BIOC_PACKAGES= \
