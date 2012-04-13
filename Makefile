@@ -243,9 +243,11 @@ R_BIOC_PACKAGES= \
 	cummeRbund \
 	multtest \
 	GeneR \
-	mircoRNA \
 	biomaRt \
 	mirbase.db \
+	genomeIntervals \
+	genomicFeatures \
+	rtracklayer \
 	geneplotter
 
 R_CRAN_PACKAGES= \
