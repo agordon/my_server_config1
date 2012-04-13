@@ -23,6 +23,10 @@ R_PREFIX=/opt/$(basename $(basename $(notdir $(R))))
 # hard-coded mirror, so that R doesn't pop-up the ugly Tcl GUI and ask for one.
 R_CRAN_MIRROR="http://R.research.att.com"
 
+# Atlas shared library path in CentOS
+# in debian, it's /usr/lib/atlas-base/
+ATLAS_LIBS_PATH="/usr/lib64/atlas"
+
 #Perl custom installation
 PERL=http://www.cpan.org/src/5.0/perl-5.14.2.tar.gz
 PERL_TARNAME=$(notdir $(PERL))
@@ -456,7 +460,8 @@ xzutils:
 
 .PHONY: R
 R:
-	$(MAKE) URL="$(R)" PREFIX="$(R_PREFIX)" CONFIG_PARAMS="--enable-R-shlib" build-autoconf-package
+	@( [ -e "$(ATLAS_LIBS_PATH)/libatlas.so" ] || { printf "Error: can't find ATLAS libraries in $(ATLAS_LIBS_PATH).\nPerhaps you need another path? (in Debian, it's probably /usr/lib/atlas-base).\nUse:\n   make ATLAS_LIBS_PATH=/usr/lib/XXXX R\n" >&2 ; exit 1 ; } )
+	$(MAKE) URL="$(R)" PREFIX="$(R_PREFIX)" CONFIG_PARAMS="--enable-R-shlib --with-blas=\"-L$(ATLAS_LIBS_PATH) -lptf77blas -lpthread -latlas\"" build-autoconf-package
 
 # install "R" to "/opt/R-X.Y.Z" and create symlinks to /usr/local/bin/R-X.Y.Z
 .PHONY: R-install
