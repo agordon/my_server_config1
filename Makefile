@@ -104,6 +104,7 @@ endif
 DEFAULT_INSTALLATION_PREFIX=/usr/local
 
 CPAN_MODULES=\
+		App::Ack \
 		YAML::XS \
 		YAML::Any \
 		Test::Exception \
