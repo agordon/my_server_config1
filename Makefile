@@ -18,7 +18,7 @@ BAMTOOLS_GIT=git://github.com/pezmaster31/bamtools.git
 FILO_GIT=git://github.com/agordon/filo.git
 
 #R custom installation
-R=http://cran.stat.ucla.edu/src/base/R-2/R-2.14.1.tar.gz
+R=http://cran.stat.ucla.edu/src/base/R-2/R-2.15.0.tar.gz
 R_PREFIX=/opt/$(basename $(basename $(notdir $(R))))
 # hard-coded mirror, so that R doesn't pop-up the ugly Tcl GUI and ask for one.
 R_CRAN_MIRROR="http://R.research.att.com"
