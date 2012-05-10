@@ -16,6 +16,7 @@ BEDTOOLS_GIT=git://github.com/arq5x/bedtools.git
 PIXELBEAT_GIT=git://github.com/pixelb/scripts.git
 BAMTOOLS_GIT=git://github.com/pezmaster31/bamtools.git
 FILO_GIT=git://github.com/agordon/filo.git
+FREEBAYES_GIT=git://github.com/ekg/freebayes.git
 
 #R custom installation
 R=http://cran.stat.ucla.edu/src/base/R-2/R-2.15.0.tar.gz
@@ -314,6 +315,7 @@ all:
 	@echo "    bwa"
 	@echo "    bedtools"
 	@echo "    bamtools"
+	@echo "    freebayes"
 	@echo "    jktools (common UCSC command-line tools)"
 	@echo ""
 	@echo "  bioinfo-install - build & install the above BioInfo packages"
@@ -598,10 +600,10 @@ bowtie2-install:
 
 
 .PHONY: bioinfo
-bioinfo: samtools bowtie bwa bedtools bamtools tophat cufflinks jktools
+bioinfo: samtools bowtie bwa bedtools bamtools tophat cufflinks jktools freebayes
 
 .PHONY: bioinfo-install
-bioinfo-install: samtools_install  bwa_install bowtie-install jktools-install bedtools-install bamtools-install
+bioinfo-install: samtools_install  bwa_install bowtie-install jktools-install bedtools-install bamtools-install freebayes-install
 	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
 	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
 
@@ -676,6 +678,19 @@ bedtools:
 .PHONY: bedtools-install
 bedtools-install:
 	cp ./bedtools/bin/bedtools $(DEFAULT_INSTALLATION_PREFIX)/bin/
+
+.PHONY: freebayes
+freebayes:
+	[ -d "freebayes" ] || git clone --recursive $(FREEBAYES_GIT) freebayes
+	( cd "freebayes" ; \
+	  git pull ; \
+	  $(MAKE) clean ; \
+	  $(MAKE) ; \
+	)
+
+.PHONY: freebayes-install
+freebayes-install:
+	cp ./freebayes/bin/{bamleftalign,freebayes} $(DEFAULT_INSTALLATION_PREFIX)/bin/
 
 .PHONY: bamtools
 bamtools:
