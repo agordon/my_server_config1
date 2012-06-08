@@ -17,6 +17,7 @@ PIXELBEAT_GIT=git://github.com/pixelb/scripts.git
 BAMTOOLS_GIT=git://github.com/pezmaster31/bamtools.git
 FILO_GIT=git://github.com/agordon/filo.git
 FREEBAYES_GIT=git://github.com/ekg/freebayes.git
+FASTX_READ_COUNT_GIT=git://github.com/agordon/fastx_read_count.git
 
 #R custom installation
 R=http://cran.stat.ucla.edu/src/base/R-2/R-2.15.0.tar.gz
@@ -317,6 +318,7 @@ all:
 	@echo "    bamtools"
 	@echo "    freebayes"
 	@echo "    jktools (common UCSC command-line tools)"
+	@echo "    fastx_read_count"
 	@echo ""
 	@echo "  bioinfo-install - build & install the above BioInfo packages"
 	@echo ""
@@ -600,10 +602,10 @@ bowtie2-install:
 
 
 .PHONY: bioinfo
-bioinfo: samtools bowtie bwa bedtools bamtools tophat cufflinks jktools freebayes
+bioinfo: samtools bowtie bwa bedtools bamtools tophat cufflinks jktools freebayes fastx_read_count
 
 .PHONY: bioinfo-install
-bioinfo-install: samtools_install  bwa_install bowtie-install jktools-install bedtools-install bamtools-install freebayes-install
+bioinfo-install: samtools_install  bwa_install bowtie-install jktools-install bedtools-install bamtools-install freebayes-install fastx_read_count-install
 	$(MAKE) URL="$(TOPHAT)" install-autoconf-package
 	$(MAKE) URL="$(CUFFLINKS)" install-autoconf-package
 
@@ -665,6 +667,18 @@ unzip-install: $(UNZIP_BASENAME)/unzip
 	( cd $(UNZIP_BASENAME) && \
 	  cp unzip funzip $(DEFAULT_INSTALLATION_PREFIX)/bin/ )
 	@echo ""
+
+.PHONY: fastx_read_count
+fastx_read_count:
+	[ -d "fastx_read_count" ] || git clone $(FASTX_READ_COUNT_GIT) fastx_read_count
+	( cd "fastx_read_count" ; \
+	  git pull ; \
+	  ./reconf && ./configure --prefix=$(DEFAULT_INSTALLATION_PREFIX) && $(MAKE) \
+	)
+
+.PHONY: fastx_read_count-install
+fastx_read_count-install:
+	$(MAKE) -C "fastx_read_count" install
 
 .PHONY: bedtools
 bedtools:
