@@ -1,5 +1,5 @@
 #PACKAGES - update URLs are necessary
-XZUTILS=http://tukaani.org/xz/xz-5.0.3.tar.gz
+XZUTILS=http://tukaani.org/xz/xz-5.1.1alpha.tar.gz
 COREUTILS=http://ftp.gnu.org/gnu/coreutils/coreutils-8.17.tar.xz
 GAWK=http://ftp.gnu.org/gnu/gawk/gawk-4.0.0.tar.gz
 GSED=ftp://ftp.gnu.org/gnu/sed/sed-4.2.tar.gz
