@@ -109,6 +109,7 @@ CPAN_MODULES=\
 		App::Ack \
 		YAML::XS \
 		YAML::Any \
+		Text::ParseWords \
 		Test::Exception \
 		Test::Pod \
 		Test::Pod::Coverage \
