@@ -167,6 +167,8 @@ CPAN_DANCER_MODULES=\
 		Dancer::Session::YAML \
 		Dancer::Session::Memcached \
 		Plack::Runner \
+		Text::Markdown \
+		Template::Plugin::Markdown \
 		Authen::SASL::XS
 
 
