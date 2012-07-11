@@ -171,6 +171,64 @@ CPAN_DANCER_MODULES=\
 		Template::Plugin::Markdown \
 		Authen::SASL::XS
 
+REDHAT6_PACKAGES=
+	gcc \
+	gcc-gfortran \
+	cmake \
+	automake \
+	autoconf \
+	gmp-devel \
+	xsel \
+	libselinux-devel \
+	libattr-devel \
+	libcap-devel \
+	libcap-ng-devel \
+	libacl-devel \
+	readline-devel \
+	libX11-devel \
+	libXt-devel \
+	libXext-devel \
+	postgresql-devel \
+	pcre \
+	pcre-devel \
+	ncurses-devel \
+	libcurl \
+	libcurl-devel \
+	fftw-devel \
+	openldap \
+	openldap-devel \
+	fuse-devel \
+	libpng-devel\
+	httpd-devel \
+	bzip2-devel \
+	python-devel \
+	libxml2-devel \
+	gettext-devel \
+	httpd-tools \
+	httpd \
+	postgresql \
+	php-cli \
+	php-common \
+	php-gd \
+	php-mysql \
+	php-pecl-memcached \
+	php-ldap \
+	mod_ssl \
+	mod_python \
+	mod_xsendfile \
+	mod_perl \
+	xorg-x11-xauth \
+	libXp \
+	gnuplot44 \
+	valgrind \
+	units \
+	ctags \
+	dos2unix \
+	fuse \
+	fuse-sshfs \
+	HPC-atlas-devel \
+	HPC-atlas-sse3-devel
+
 
 CENTOS_PACKAGES=\
 		memcached.x86_64 \
@@ -283,6 +341,9 @@ all:
 	@echo "  cshl_centos   - install needed CentOS packages."
 	@echo "                  (requires 'sudo')"
 	@echo ""
+	@echo "  cshl_redhat6  - install needed RedHat-6.3 packages."
+	@echo "                  (requires 'sudo')"
+	@echo ""
 	@echo "  common-build  - build all the packages listed below:"
 	@echo ""
 	@echo "    coreutils     - GNU coreutils"
@@ -351,6 +412,9 @@ BWA_DIR=$(CURDIR)/$(basename $(basename $(notdir $(BWA))))
 
 
 
+.PHONY: cshl_redhat6
+cshl_redhat6:
+	yum install $(REDHAT6_PACKAGES)
 
 .PHONY: cshl_centos
 cshl_centos:
