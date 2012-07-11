@@ -153,6 +153,7 @@ CPAN_MODULES=\
 		Term::ReadLine::Gnu \
 		PerlConsole \
 		Moo \
+		XML::Simple \
 		Devel::CheckLib
 
 CPAN_DANCER_MODULES=\
