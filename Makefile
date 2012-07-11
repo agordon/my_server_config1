@@ -2,7 +2,7 @@
 XZUTILS=http://tukaani.org/xz/xz-5.1.1alpha.tar.gz
 COREUTILS=http://ftp.gnu.org/gnu/coreutils/coreutils-8.17.tar.xz
 GAWK=http://ftp.gnu.org/gnu/gawk/gawk-4.0.0.tar.gz
-GSED=ftp://ftp.gnu.org/gnu/sed/sed-4.2.tar.gz
+GSED=ftp://ftp.gnu.org/gnu/sed/sed-4.2..1.tar.gz
 FINDUTILS=http://ftp.gnu.org/pub/gnu/findutils/findutils-4.4.2.tar.gz
 GREP=ftp://ftp.gnu.org/gnu/grep/grep-2.10.tar.xz
 GIT=http://git-core.googlecode.com/files/git-1.7.9.1.tar.gz
@@ -42,7 +42,7 @@ UNZIP_BASENAME=$(basename $(UNZIP_ZIPNAME))
 
 #BIOINFO PACKAGES
 SAMTOOLS=http://downloads.sourceforge.net/project/samtools/samtools/0.1.18/samtools-0.1.18.tar.bz2
-BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.7/bowtie-0.12.7-src.zip
+BOWTIE=http://downloads.sourceforge.net/project/bowtie-bio/bowtie/0.12.8/bowtie-0.12.8-src.zip
 CUFFLINKS=http://cufflinks.cbcb.umd.edu/downloads/cufflinks-1.3.0.tar.gz
 TOPHAT=http://tophat.cbcb.umd.edu/downloads/tophat-1.4.1.tar.gz
 BWA=http://downloads.sourceforge.net/project/bio-bwa/bwa-0.6.1.tar.bz2
@@ -51,7 +51,7 @@ BWA=http://downloads.sourceforge.net/project/bio-bwa/bwa-0.6.1.tar.bz2
 BOWTIE_ZIP=$(notdir $(BOWTIE))
 BOWTIE_DIR=$(subst -src,,$(basename $(BOWTIE_ZIP)))
 
-BOWTIE2=http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.0.0-beta5/bowtie2-2.0.0-beta5.zip
+BOWTIE2=http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.0.0-beta6/bowtie2-2.0.0-beta6.zip
 #BOWTIE2 Custom installation
 BOWTIE2_ZIP=$(notdir $(BOWTIE2))
 BOWTIE2_DIR=$(basename $(BOWTIE2_ZIP))
