@@ -171,7 +171,7 @@ CPAN_DANCER_MODULES=\
 		Template::Plugin::Markdown \
 		Authen::SASL::XS
 
-REDHAT6_PACKAGES=
+REDHAT6_PACKAGES=\
 	gcc \
 	gcc-gfortran \
 	cmake \
