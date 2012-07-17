@@ -179,6 +179,7 @@ CPAN_DANCER_MODULES=\
 REDHAT6_PACKAGES=\
 	gcc \
 	gcc-gfortran \
+	gcc-java \
 	cmake \
 	automake \
 	autoconf \
@@ -234,6 +235,15 @@ REDHAT6_PACKAGES=\
 	meld \
 	fortune-mod \
 	nemiver \
+	expect \
+	dejagnu \
+	gsl-devel \
+	openssl-devel \
+	mutt \
+	nc \
+	meld \
+	mpich2-devel \
+	svn \
 	HPC-atlas-devel \
 	HPC-atlas-sse3-devel
 
