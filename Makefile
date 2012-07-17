@@ -243,6 +243,8 @@ REDHAT6_PACKAGES=\
 	nc \
 	meld \
 	mpich2-devel \
+	ImageMagick \
+	ImageMagick-devel \
 	svn \
 	HPC-atlas-devel \
 	HPC-atlas-sse3-devel
