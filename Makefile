@@ -154,6 +154,10 @@ CPAN_MODULES=\
 		PerlConsole \
 		Moo \
 		XML::Simple \
+		HTML::Template \
+		Math::CDF \
+		SOAP::Lite \
+		Log::Log4perl \
 		Devel::CheckLib
 
 CPAN_DANCER_MODULES=\
