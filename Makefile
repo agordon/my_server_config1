@@ -227,6 +227,9 @@ REDHAT6_PACKAGES=\
 	dos2unix \
 	fuse \
 	fuse-sshfs \
+	meld \
+	fortune-mod \
+	nemiver \
 	HPC-atlas-devel \
 	HPC-atlas-sse3-devel
 
@@ -330,6 +333,7 @@ R_CRAN_PACKAGES= \
 	optparse \
 	ape \
 	TeachingDemos \
+	combinat \
 	multicore
 
 all:
