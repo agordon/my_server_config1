@@ -158,6 +158,9 @@ CPAN_MODULES=\
 		Math::CDF \
 		SOAP::Lite \
 		Log::Log4perl \
+		Statistics::Descriptive \
+		Proc::Daemon \
+		Proc::ProcessTable \
 		Devel::CheckLib
 
 CPAN_DANCER_MODULES=\
