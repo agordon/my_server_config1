@@ -161,6 +161,7 @@ CPAN_MODULES=\
 		Statistics::Descriptive \
 		Proc::Daemon \
 		Proc::ProcessTable \
+		Devel::Trace \
 		Devel::CheckLib
 
 CPAN_DANCER_MODULES=\
