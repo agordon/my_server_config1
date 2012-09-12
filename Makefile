@@ -355,6 +355,7 @@ R_CRAN_PACKAGES= \
 	ape \
 	TeachingDemos \
 	combinat \
+	hexbin \
 	multicore
 
 all:
