@@ -72,6 +72,7 @@ JKTOOLS_EXES=bedClip \
 	     bigWigToWig \
 	     faToNib \
 	     faToTwoBit \
+	     fetchChromSizes \
 	     genePredToGtf \
 	     gff3ToGenePred \
 	     gtfToGenePred \
