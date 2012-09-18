@@ -229,6 +229,7 @@ REDHAT6_PACKAGES=\
 	mod_xsendfile \
 	mod_perl \
 	xorg-x11-xauth \
+	pandoc \
 	libXp \
 	gnuplot44 \
 	valgrind \
