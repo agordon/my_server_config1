@@ -30,7 +30,7 @@ R_CRAN_MIRROR="http://R.research.att.com"
 ATLAS_LIBS_PATH="/usr/lib64/atlas"
 
 #Perl custom installation
-PERL=http://www.cpan.org/src/5.0/perl-5.16.0.tar.gz
+PERL=http://www.cpan.org/src/5.0/perl-5.16.1.tar.gz
 PERL_TARNAME=$(notdir $(PERL))
 PERL_BASENAME=$(basename $(basename $(PERL_TARNAME)))
 PERL_DEST=/opt/$(PERL_BASENAME)/
