@@ -130,6 +130,8 @@ CPAN_MODULES=\
 		JSON::XS \
 		JSON \
 		Crypt::Blowfish \
+		GD \
+		GD::Graph \
 		Moose \
 		Text::CSV_XS \
 		URI::Escape:XS \
@@ -224,6 +226,7 @@ REDHAT6_PACKAGES=\
 	php-mysql \
 	php-pecl-memcached \
 	php-ldap \
+	gd-devel \
 	mod_ssl \
 	mod_python \
 	mod_xsendfile \
