@@ -15,7 +15,7 @@ PARALLEL=http://ftp.gnu.org/gnu/parallel/parallel-20120122.tar.bz2
 BEDTOOLS_GIT=git://github.com/arq5x/bedtools.git
 PIXELBEAT_GIT=git://github.com/pixelb/scripts.git
 BAMTOOLS_GIT=git://github.com/pezmaster31/bamtools.git
-FILO_GIT=git://github.com/agordon/filo.git
+BIN_SCRIPTS_GIT=git://github.com/agordon/bin_scripts.git
 FREEBAYES_GIT=git://github.com/ekg/freebayes.git
 FASTX_READ_COUNT_GIT=git://github.com/agordon/fastx_read_count.git
 
@@ -392,7 +392,7 @@ all:
 	@echo "    parallel      - GNU parallel and niceload"
 	@echo "    unzip         - unzip"
 	@echo "    pixelbeat     - Some excellent shell scripts from P@draigBrady.com"
-	@echo "    filo          - file processing scripts"
+	@echo "    bin_scripts   - file processing scripts"
 	@echo ""
 	@echo "  common-install - Installs all the above pacakages."
 	@echo "                   Assumes 'common-build' was successfully executed."
@@ -473,7 +473,7 @@ common-build: xzutils \
 	nano \
 	unzip \
 	pixelbeat \
-	filo \
+	bin_scripts \
 	pv
 
 
@@ -677,6 +677,7 @@ common-install:
 	$(MAKE) URL="$(PARALLEL)" install-autoconf-package
 	$(MAKE) unzip-install
 	$(MAKE) pixelbeat-install
+	$(MAKE) bin_scripts-install
 
 
 ##
@@ -822,19 +823,18 @@ bamtools-install:
 	## NOTE: "make install" doesn't put the libraries in the right place, so copy them manually
 	cp ./bamtools/lib/* $(DEFAULT_INSTALLATION_PREFIX)/lib/
 
-.PHONY: filo
-filo:
-	rm -rf ./filo
-	# NOTE: I only need the scripts from "filo", so I don't run "make" to compile the programs
-	( git clone $(FILO_GIT) filo && \
-	  cd "filo" && \
-	  git checkout origin/scripts \
-	)
+.PHONY: bin_scripts
+bin_scripts:
+	[ -d ./bin_scripts ] || git clone $(BIN_SCRIPTS_GIT)
+	( cd ./bin_scripts && \
+	  git pull && \
+	  ./bootstrap.sh && \
+	  ./configure $(PREFIX_PARAM) && \
+	  make )
 
-.PHONY: filo-install
-filo-install:
-	## NOTE: "make install" doesn't put the libraries in the right place, so copy them manually
-	cp ./filo/src/scripts/{easyjoin,sort-header,multijoin,tawk,tuniq-c} $(DEFAULT_INSTALLATION_PREFIX)/bin/
+.PHONY: bin_scripts-install
+bin_scripts-install:
+	( cd ./bin_scripts && make install )
 
 .PHONY: jktools
 jktools:
