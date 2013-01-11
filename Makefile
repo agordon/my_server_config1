@@ -1,11 +1,11 @@
 #PACKAGES - update URLs are necessary
 XZUTILS=http://tukaani.org/xz/xz-5.1.2alpha.tar.gz
-COREUTILS=http://ftp.gnu.org/gnu/coreutils/coreutils-8.19.tar.xz
-GAWK=http://ftp.gnu.org/gnu/gawk/gawk-4.0.0.tar.gz
-GSED=ftp://ftp.gnu.org/gnu/sed/sed-4.2..1.tar.gz
+COREUTILS=http://ftp.gnu.org/gnu/coreutils/coreutils-8.20.tar.xz
+GAWK=http://ftp.gnu.org/gnu/gawk/gawk-4.0.2.tar.gz
+GSED=ftp://ftp.gnu.org/gnu/sed/sed-4.2.2.tar.gz
 FINDUTILS=http://ftp.gnu.org/pub/gnu/findutils/findutils-4.4.2.tar.gz
-GREP=ftp://ftp.gnu.org/gnu/grep/grep-2.10.tar.xz
-GIT=http://git-core.googlecode.com/files/git-1.7.9.1.tar.gz
+GREP=ftp://ftp.gnu.org/gnu/grep/grep-2.14.tar.xz
+GIT=http://git-core.googlecode.com/files/git-1.8.1.tar.gz
 PIGZ=http://www.zlib.net/pigz/pigz-2.2.3.tar.gz
 PBZIP2=http://compression.ca/pbzip2/pbzip2-1.1.6.tar.gz
 TAR=http://ftp.gnu.org/gnu/tar/tar-1.26.tar.gz
